@@ -1,4 +1,3 @@
-import { ServiceTemp } from "./../flutterFile/template/serviceTemp";
 import { RoutingTemp } from "./../expressFile/template/routingTemp";
 import { ItemComTemp } from "./template/itemComTemp";
 import { ListComTemp } from "./template/listComTemp";
@@ -12,6 +11,9 @@ import { ModelTemp } from "./template/modelTemp";
 import { createDirectories } from "../../shared/function";
 import { BaseClass } from "../../shared/sharedClass/baseClass";
 import { ModulePageTemp } from "./template/modulePageTemp";
+import { ServiceTemp } from "../flutterFile/template/serviceTemp";
+import { ServicePageTemp } from "./template/servicePageTemp";
+import { SchemaTemp } from "./template/schemaTemp";
 export class CreateAngular extends BaseClass {
   private masterList: CellItemModel[];
   private createFileService: CreateFileService;
@@ -23,7 +25,8 @@ export class CreateAngular extends BaseClass {
   private moduleComTemp: ModuleComTemp;
   private modulePageTemp: ModulePageTemp;
   private routingTemp: RoutingTemp;
-  private serviceTemp: ServiceTemp;
+  private serviceTemp: ServicePageTemp;
+  private schemaTemp: SchemaTemp;
 
   constructor(masterList: CellItemModel[]) {
     super(masterList);
@@ -37,11 +40,23 @@ export class CreateAngular extends BaseClass {
     this.moduleComTemp = new ModuleComTemp(this.masterList);
     this.modulePageTemp = new ModulePageTemp(this.masterList);
     this.routingTemp = new RoutingTemp(this.masterList);
-    this.serviceTemp = new ServiceTemp(this.masterList);
+    this.serviceTemp = new ServicePageTemp(this.masterList);
+    this.schemaTemp = new SchemaTemp(this.masterList);
   }
   createAngularWeb() {
     this.createComponent();
     this.createPage();
+    this.createSchema();
+  }
+  createSchema() {
+    const directory: string = `export/angular/schema/${this.moduleNameSnakeNonTable}`;
+    const fileName: string = `Sc${this.moduleName}`;
+    this.createFileService.saveFile(
+      this.schemaTemp.getSchemaData(),
+      FormatType.TS,
+      fileName,
+      directory
+    );
   }
   private createComponent() {
     this.createListConponent();
@@ -109,7 +124,7 @@ export class CreateAngular extends BaseClass {
     const directory: string = `export/angular/component/${this.moduleNameSnakeNonTable}`;
     const fileName: string = `${this.moduleNameSnakeNonTable}.service`;
     this.createFileService.saveFile(
-      this.serviceTemp.getServiceTemplate(),
+      this.serviceTemp.getServiceData(),
       FormatType.TS,
       fileName,
       directory

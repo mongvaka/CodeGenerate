@@ -23,47 +23,59 @@ export class ServicePageTemp extends BaseClass {
     this.template.push(`  providedIn: 'root',`);
     this.template.push(`})`);
     this.template.push(`export class ${this.moduleName}Service {`);
-    this.template.push(`  serviceKey = 'bank_uuid';`);
+    this.template.push(
+      `  serviceKey = '${this.moduleNameSnakeNonTable}_uuid';`
+    );
     this.template.push(`  servicePath = '';`);
     this.template.push(`  constructor(private gateway: GatewayService) {}`);
     this.template.push(
       `  get${this.moduleName}TableList(search: SearchParameter): any {`
     );
     this.template.push(
-      `    const url = $` +
+      `    const url = ` +
+        "`$" +
         `{this.servicePath}/get${this.moduleName}TableList` +
+        "`" +
         `;`
     );
     this.template.push(`    return this.gateway.list(url, search);`);
     this.template.push(`  }`);
     this.template.push(`  get${this.moduleName}TableById(id: string): any {`);
     this.template.push(
-      `    const url = $` +
+      `    const url = ` +
+        "`$" +
         `{this.servicePath}/get${this.moduleName}TableById` +
+        "`" +
         `;`
     );
     this.template.push(`    return this.gateway.get(url, id);`);
     this.template.push(`  }`);
     this.template.push(`  create${this.moduleName}Table(data: any): any {`);
     this.template.push(
-      `    const url = $` +
+      `    const url = ` +
+        "`$" +
         `{this.servicePath}/create${this.moduleName}Table` +
+        "`" +
         `;`
     );
     this.template.push(`    return this.gateway.create(url, data);`);
     this.template.push(`  }`);
     this.template.push(`  edit${this.moduleName}Table(data: any): any {`);
     this.template.push(
-      `    const url = $` +
+      `    const url = ` +
+        "`$" +
         `{this.servicePath}/edit${this.moduleName}Table` +
+        "`" +
         `;`
     );
     this.template.push(`    return this.gateway.edit(url, data);`);
     this.template.push(`  }`);
     this.template.push(`  delete${this.moduleName}Table(id: string): any {`);
     this.template.push(
-      `    const url = $` +
+      `    const url = ` +
+        "`$" +
         `{this.servicePath}/delete${this.moduleName}Table` +
+        "`" +
         `;`
     );
     this.template.push(`    return this.gateway.del(url, id);`);

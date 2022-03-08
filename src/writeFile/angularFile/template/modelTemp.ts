@@ -53,7 +53,7 @@ export class ModelTemp extends BaseClass {
     this.itemModel.push(
       `export class ${this.moduleName}ItemModel extends BaseCompanyView {`
     );
-    this.listModel.push(`  ${this.primaryColumn}: string = null;`);
+    this.itemModel.push(`  ${this.primaryColumn}: string = null;`);
 
     itemModels.forEach((item) => {
       const columnName: string = getColumnName(
@@ -61,7 +61,7 @@ export class ModelTemp extends BaseClass {
         item.columnName
       );
       const columnType: string = getAgularFieldType(item.dataType);
-      this.listModel.push(`  ${columnName}: ${columnType} = null;`);
+      this.itemModel.push(`  ${columnName}: ${columnType} = null;`);
     });
     this.itemModel.push(`}`);
 

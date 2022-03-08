@@ -163,7 +163,7 @@ export const getConfig = (dataType: string) => {
     case DataType.BOOLEAN:
       return ConfigType.DEFAULT_INPUTSWITCH;
     default:
-      return "Default case";
+      return ConfigType.DEFAULT_INPUTTEXT;
   }
 };
 export const createDirectories = (path: string) => {

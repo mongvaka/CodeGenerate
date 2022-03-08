@@ -74,53 +74,59 @@ export class SchemaTemp extends BaseClass {
       );
       this.template.push(
         `    ${columnSanke}: ` +
-          "${" +
+          "`${" +
           `Sc${this.moduleName}.tb_name}.${columnSanke},`
       );
 
       this.template.push(
         `    ${columnSanke}: ` +
-          "${" +
+          "`${" +
           `Sc${this.moduleName}.tb_name}_${columnSanke}` +
           `,`
       );
     });
     this.template.push(
       `    company_uuid: ` +
-        "${" +
+        "`${" +
         `Sc${this.moduleName}.tb_name}_company_uuid` +
         `,`
     );
     this.template.push(
       `    branch_uuid: ` +
-        "${" +
+        "`${" +
         `Sc${this.moduleName}.tb_name}_branch_uuid` +
         `,`
     );
     this.template.push(
-      `    ref_uuid: ` + "${" + `Sc${this.moduleName}.tb_name}_ref_uuid` + `,`
+      `    ref_uuid: ` + "`${" + `Sc${this.moduleName}.tb_name}_ref_uuid` + `,`
     );
     this.template.push(
-      `    ref_type: ` + "${" + `Sc${this.moduleName}.tb_name}_ref_type` + `,`
+      `    ref_type: ` + "`${" + `Sc${this.moduleName}.tb_name}_ref_type` + `,`
     );
     this.template.push(
-      `    is_active: ` + "${" + `Sc${this.moduleName}.tb_name}_is_active` + `,`
+      `    is_active: ` +
+        "`${" +
+        `Sc${this.moduleName}.tb_name}_is_active` +
+        `,`
     );
     this.template.push(
       `    create_by: ` + "${" + `Sc${this.moduleName}.tb_name}_create_by` + `,`
     );
     this.template.push(
       `    create_date: ` +
-        "${" +
+        "`${" +
         `Sc${this.moduleName}.tb_name}_create_date` +
         `,`
     );
     this.template.push(
-      `    update_by: ` + "${" + `Sc${this.moduleName}.tb_name}_update_by` + `,`
+      `    update_by: ` +
+        "`${" +
+        `Sc${this.moduleName}.tb_name}_update_by` +
+        `,`
     );
     this.template.push(
       `    update_date: ` +
-        "${" +
+        "`${" +
         `Sc${this.moduleName}.tb_name}_update_date` +
         `,`
     );

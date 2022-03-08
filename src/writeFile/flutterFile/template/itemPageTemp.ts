@@ -13,7 +13,9 @@ export class ItemPageTemp extends BaseClass {
     return this.template;
   }
   private initialDataItemPage() {
-    const itemList = this.masterList.filter(value=>value.listViewOrdering!=null)
+    const itemList = this.masterList.filter(
+      (value) => value.listViewOrdering != null
+    );
     this.template.push(`import 'dart:convert';`);
     this.template.push(`import 'dart:io';`);
     this.template.push(`import 'dart:typed_data';`);
@@ -185,22 +187,18 @@ export class ItemPageTemp extends BaseClass {
     );
     this.template.push(`            children: [`);
 
+    itemList.forEach((item) => {
+      // const inputType:string = getInputType(item.dataType);
 
-itemList.forEach(item=>{
-  const inputType:string = getInputType(item.dataType);
-  
-  this.template.push(`              CsTextFeild(`);
-    this.template.push(
-      `                controller: _model.bank_name_controler,`
-    );
-    this.template.push(`                hintText: 'BANK_NAME',`);
-    this.template.push(`                mandatory: true,`);
-    this.template.push(`                inputType: TextFieldType.PASSWORD,`);
-    this.template.push(`              ),`);
-})
-
-
-
+      this.template.push(`              CsTextFeild(`);
+      this.template.push(
+        `                controller: _model.bank_name_controler,`
+      );
+      this.template.push(`                hintText: 'BANK_NAME',`);
+      this.template.push(`                mandatory: true,`);
+      this.template.push(`                inputType: TextFieldType.PASSWORD,`);
+      this.template.push(`              ),`);
+    });
 
     this.template.push(`              CsTextFeild(`);
     this.template.push(
@@ -223,10 +221,6 @@ itemList.forEach(item=>{
     );
     this.template.push(`                hintText: "BANK_BRANCH",`);
     this.template.push(`              ),`);
-
-
-
-
 
     this.template.push(`            ],`);
     this.template.push(`          ),`);

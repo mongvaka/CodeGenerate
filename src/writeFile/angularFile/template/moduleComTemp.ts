@@ -22,16 +22,16 @@ export class ModuleComTemp extends BaseClass {
       `import { SharedModule } from 'app/shared/shared.module';`
     );
     this.template.push(
-      `import { ${this.moduleName}ListComponent } from './${this.moduleNameSnakeNonTable}-list.component/${this.moduleNameSnakeNonTable}-list.component';`
+      `import { ${this.moduleName}ListComponent } from './${this.moduleNameSnakeNonTable}-list/${this.moduleNameSnakeNonTable}-list.component';`
     );
     this.template.push(
-      `import { ${this.moduleName}ItemComponent } from './${this.moduleNameSnakeNonTable}-item.component/${this.moduleNameSnakeNonTable}-item.component';`
+      `import { ${this.moduleName}ItemComponent } from './${this.moduleNameSnakeNonTable}-item/${this.moduleNameSnakeNonTable}-item.component';`
     );
     this.template.push(
-      `import { ${this.moduleName}ListCustomComponent } from './${this.moduleNameSnakeNonTable}-list.component/${this.moduleNameSnakeNonTable}-list-custom.component';`
+      `import { ${this.moduleName}ListCustomComponent } from './${this.moduleNameSnakeNonTable}-list/${this.moduleNameSnakeNonTable}-list-custom.component';`
     );
     this.template.push(
-      `import { ${this.moduleName}ItemCustomComponent } from './${this.moduleNameSnakeNonTable}-item.component/${this.moduleNameSnakeNonTable}-item-custom.component';`
+      `import { ${this.moduleName}ItemCustomComponent } from './${this.moduleNameSnakeNonTable}-item/${this.moduleNameSnakeNonTable}-item-custom.component';`
     );
     this.template.push(`@NgModule({`);
     this.template.push(

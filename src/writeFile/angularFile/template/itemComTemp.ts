@@ -366,7 +366,7 @@ export class ItemComTemp extends BaseClass {
       `import { modelRegister } from 'app/shared/functions/model.function';`
     );
     this.typeScript.push(
-      `import { ${this.moduleName}ItemCustomComponent } from './bank-item-custom.component';`
+      `import { ${this.moduleName}ItemCustomComponent } from './${this.moduleNameSnake}-item-custom.component';`
     );
     this.typeScript.push(`@Component({`);
     this.typeScript.push(`  selector: 'app-${this.moduleNameSnake}-item',`);

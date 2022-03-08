@@ -21,4 +21,6 @@ export class CellItemModel {
   groupName: string;
   groupOrdering: number;
   columnOrdering: number;
+  description: string;
+  search: boolean;
 }

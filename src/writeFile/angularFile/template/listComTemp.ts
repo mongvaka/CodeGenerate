@@ -156,26 +156,32 @@ export class ListComTemp extends BaseClass {
     this.typeScript.push(`  SelectItems,`);
     this.typeScript.push(`} from 'app/shared/models/system_model';`);
     this.typeScript.push(
-      `import { ${this.moduleName}ListCustomComponent } from './bank-list-custom.component';`
+      `import { ${this.moduleName}ListCustomComponent } from './${this.moduleNameSnakeNonTable}-list-custom.component';`
     );
     this.typeScript.push(`import { Observable } from 'rxjs';`);
     this.typeScript.push(
-      `import { ${this.moduleName}Service } from '../bank.service';`
+      `import { ${this.moduleName}Service } from '../${this.moduleNameSnakeNonTable}.service';`
     );
     this.typeScript.push(
       `import { ColumnType, SortType, Operators } from 'app/shared/constants';`
     );
     this.typeScript.push(
-      `import { Sc${this.moduleName} } from 'app/schema/Sc${this.moduleName}';`
+      `import { Sc${this.tableNamePascal} from 'app/schema/Sc${this.tableNamePascal}';`
     );
     this.typeScript.push(`const EXCEL_TYPE =`);
     this.typeScript.push(
       `  'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';`
     );
     this.typeScript.push(`@Component({`);
-    this.typeScript.push(`  selector: 'app-bank-list',`);
-    this.typeScript.push(`  templateUrl: './bank-list.component.html',`);
-    this.typeScript.push(`  styleUrls: ['./bank-list.component.scss'],`);
+    this.typeScript.push(
+      `  selector: 'app-${this.moduleNameSnakeNonTable}-list',`
+    );
+    this.typeScript.push(
+      `  templateUrl: './${this.moduleNameSnakeNonTable}-list.component.html',`
+    );
+    this.typeScript.push(
+      `  styleUrls: ['./${this.moduleNameSnakeNonTable}-list.component.scss'],`
+    );
     this.typeScript.push(`})`);
     this.typeScript.push(`export class ${this.moduleName}ListComponent`);
     this.typeScript.push(
@@ -307,7 +313,9 @@ export class ListComTemp extends BaseClass {
       this.typeScript.push(`        label: 'LABEL.${columnNameUpper}',`);
       this.typeScript.push(`        textKey: '${columnNameUpper}',`);
       this.typeScript.push(`        type: ColumnType.${columnType},`);
-      this.typeScript.push(`        tableName: Sc${this.moduleName}.tb_name,`);
+      this.typeScript.push(
+        `        tableName: Sc${this.tableNamePascal}.tb_name,`
+      );
       this.typeScript.push(`        visibility: true,`);
       this.typeScript.push(`        sorting: SortType.NONE,`);
       this.typeScript.push(`        operator: Operators.EQUAL,`);

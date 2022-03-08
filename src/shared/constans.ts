@@ -81,6 +81,15 @@ export enum PostgresDataType {
   TIME = "time without time zone",
   BOOLEAN = "boolean",
 }
+export enum ColumnTypeNest {
+  VARCHAR = "VARCHAR",
+  INT = "INT",
+  DATE = "TIMESTAMP",
+  BOOLEAN = "BOOLEAN",
+  TEXT = "TEXT",
+  DECIMAL = "DECIMAL",
+  DECIMAL14_4 = "DECIMAL(14, 4)",
+}
 export enum ColumnType {
   STRING = "STRING",
   INT = "INT",
@@ -98,11 +107,54 @@ export enum ConvertMethod {
   STRING = "toString()",
   BOOLEAN = "toBoolean()",
 }
-export enum InputType{
+export enum InputType {
   INT = "CsTextFeild",
   DOUBLE = "CsTextFeild",
   DATE = "CsCalendar",
   STRING = "CsTextFeild",
   BOOLEAN = "CSSwitch",
-  UUID = "CsDropdown"
+  UUID = "CsDropdown",
+}
+export enum ColumnArray {
+  TABLE_NAME = 0,
+  COLUMN_NAME = 1,
+  DATA_TYPE = 2,
+  UNBOUND_FIELD = 3,
+  UNBOUND_DISPLAY = 4,
+  LOOKUP_TABLE_NAME = 5,
+  LOOKUP_CONTROL = 6,
+  READONLY = 7,
+  READONLY_ON_CREATE = 8,
+  LOOKUP_ORDERING = 9,
+  CONTROL_SIZE = 10,
+  CONTROL_TYPE = 11,
+  TABLE_LABEL = 12,
+  COLUMN_LABEL = 13,
+  CREATE = 14,
+  DELETE = 15,
+  UPDATE = 16,
+  LIST_VIEW_ORDERING = 17,
+  MANDATORY = 18,
+  GROUP_NAME = 19,
+  GROUP_ORDERING = 20,
+  COLUMN_ORDERING = 21,
+}
+export enum ColumnArrayNest {
+  TABLE_NAME = 0,
+  COLUMN_NAME = 1,
+  DATA_TYPE = 2,
+  COLUMN_TYPE = 3,
+  LOOKUP_TABLE_NAME = 4,
+  REF_FIELD = 5,
+  DESCRIPTION = 6,
+  MANDATORY = 7,
+  CREATE = 8,
+  UPDATE = 9,
+  SEARCH_PARAM = 10,
+  UNBOUND_FIELD = 11,
+  READONLY = 12,
+  READONLY_ON_CREATE = 13,
+  CONTROL_TYPE = 14,
+  TABLE_LABEL = 15,
+  COLUMN_LABEL = 16,
 }
