@@ -1,0 +1,94 @@
+import { CellItemModel } from "../../../model/cellModel";
+import { BaseBoonwattanaClass } from "../base/base-boonwattana-class";
+export class AppItemTsTemp extends BaseBoonwattanaClass {
+  private masterList: CellItemModel[];
+  private t: string[];
+  constructor(masterList: CellItemModel[]) {
+    super(masterList);
+    this.masterList = masterList;
+    this.t = [];
+  }
+  getTemplate() {
+    this.initialDataItemPage();
+    return this.t;
+  }
+  private initialDataItemPage() {
+    this.t.push(`import { Component, ElementRef, Renderer2 } from '@angular/core';`);
+    this.t.push(`import { ActivatedRoute, Router } from '@angular/router';`);
+    this.t.push(`import { SelectItem } from 'primeng/api';`);
+    this.t.push(`import { forkJoin } from 'rxjs';`);
+    this.t.push(`import { BaseItemComponent } from 'src/app/shared/component/base-item/base-item.component';`);
+    this.t.push(`import { BaseItemInterface } from 'src/app/shared/interface/base-item-interface';`);
+    this.t.push(`import { DemoItemModel } from '../demo-model';`);
+    this.t.push(`import { DemoService } from '../demo.service';`);
+    this.t.push(``);
+    this.t.push(`@Component({`);
+    this.t.push(`  selector: 'demo-item',`);
+    this.t.push(`  templateUrl: './demo-item.component.html',`);
+    this.t.push(`  styleUrls: ['./demo-item.component.scss']`);
+    this.t.push(`})`);
+    this.t.push(`export class DemoItemComponent extends BaseItemComponent<DemoItemModel>  implements BaseItemInterface {`);
+    this.t.push(`  constructor(el:ElementRef,renderer:Renderer2,private readonly service:DemoService, router: Router , route:ActivatedRoute){`);
+    this.t.push(`    super(el,renderer,router,route) `);
+    this.t.push(`  }`);
+    this.t.push(`  gendarDropdown:SelectItem[]=[]`);
+    this.t.push(`  formValidate:boolean =true`);
+    this.t.push(`  ngOnDestroy(): void {`);
+    this.t.push(`  }`);
+    this.t.push(`  ngAfterViewInit(): void {`);
+    this.t.push(`    if(this.isUpdateMode){`);
+    this.t.push(`      this.getById()`);
+    this.t.push(`    }else{`);
+    this.t.push(`      this.setInitialCreatingData()`);
+    this.t.push(`    }`);
+    this.t.push(`  }`);
+    this.t.push(``);
+    this.t.push(`  onEnumLoader(): void {`);
+    this.t.push(`    this.gendarDropdown = this.dropdownService.getGendarDropDown()`);
+    this.t.push(`  }`);
+    this.t.push(`  getById(): void{`);
+    this.t.push(`    this.service.getItem(this.id).subscribe(result=>{      `);
+    this.t.push(`      this.model = result`);
+    this.t.push(`      this.onAsyncRunner(result);`);
+    this.t.push(`    })`);
+    this.t.push(`  }`);
+    this.t.push(`  onAsyncRunner(model?: any): void {`);
+    this.t.push(`    this.onEnumLoader()`);
+    this.t.push(`    forkJoin(this.service.getDemoDropdown()).subscribe(`);
+    this.t.push(`      (demoDropDown) => {`);
+    this.t.push(`      },`);
+    this.t.push(`      (error) => {`);
+    this.t.push(`      }`);
+    this.t.push(`    );`);
+    this.t.push(`  }`);
+    this.t.push(`  async setInitialCreatingData(){`);
+    this.t.push(`    this.service.initial().subscribe(result=>{`);
+    this.t.push(`      this.model = result`);
+    this.t.push(`      this.onAsyncRunner(result);`);
+    this.t.push(`    })`);
+    this.t.push(`  }`);
+    this.t.push(`  onSave(): void {`);
+    this.t.push(`    this.onSubmit(this.validateField())`);
+    this.t.push(`  }`);
+    this.t.push(`  ngOnInit(): void {`);
+    this.t.push(`   this.setInitialCreatingData()`);
+    this.t.push(`  } `);
+    this.t.push(`  async onSubmit(isValid:boolean){    `);
+    this.t.push(`    if(isValid){`);
+    this.t.push(`      if(this.isUpdateMode){`);
+    this.t.push(`        this.service.update(this.id,this.model).subscribe(value=>{`);
+    this.t.push(`          this.backTolist()`);
+    this.t.push(`        })`);
+    this.t.push(`      }else{`);
+    this.t.push(`        this.service.create(this.model).subscribe(value=>{`);
+    this.t.push(`          this.backTolist()`);
+    this.t.push(`        })`);
+    this.t.push(`      }`);
+    this.t.push(`    }`);
+    this.t.push(`  }`);
+    this.t.push(`  backTolist(){    `);
+    this.t.push(`    this.toList('demo')`);
+    this.t.push(`  }`);
+    this.t.push(`}`);
+  }
+}

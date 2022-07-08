@@ -1,6 +1,6 @@
+import { CellItemModel } from "src/model/cellModel";
 import { ColumnTypeNest } from "../../../shared/constans";
-import { CellItemModel } from "./../../../model/cellModel";
-export class BaseNestClass {
+export class BaseBoonwattanaClass {
   moduleName: string;
   camelCase: string;
   pascalCae: string;

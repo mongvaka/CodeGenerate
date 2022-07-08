@@ -1,15 +1,15 @@
-import { NestDtoTemp } from "./template/dtoTemp";
+import { NestDtoTemp } from "./template-api/api-dto-temp";
 import { CellItemModel } from "../../model/cellModel";
 import { CreateFileService } from "../../shared/createFileService";
 import { BaseClass } from "../../shared/sharedClass/baseClass";
 import { FormatType } from "../../shared/constans";
-import { NestControllerTemp } from "./template/controllerTemp";
-import { NestEntityTemp } from "./template/entityTemp";
-import { NestModuleTemp } from "./template/moduleTemp";
-import { NestResponseTemp } from "./template/responsTemp";
-import { NestServiceTemp } from "./template/serviceTemp";
-import { BaseNestClass } from "./base/baseNestClass";
-export class CreateNest extends BaseNestClass {
+import { NestControllerTemp } from "./template-api/api-controller-temp";
+import { NestEntityTemp } from "./template-api/api-entity-temp";
+import { NestModuleTemp } from "./template-api/api-module-temp";
+import { NestServiceTemp } from "./template-api/api-service-temp";
+import { BaseBoonwattanaClass } from "./base/base-boonwattana-class";
+import { NestDropdownTemp } from "./template-api/api-dropdown-temp";
+export class CreateNest extends BaseBoonwattanaClass {
   masterList: CellItemModel[];
 
   private createFileService: CreateFileService;
@@ -17,8 +17,8 @@ export class CreateNest extends BaseNestClass {
   dtoTemp: NestDtoTemp;
   entityTemp: NestEntityTemp;
   moduleTemp: NestModuleTemp;
-  responsTemp: NestResponseTemp;
   serviceTemp: NestServiceTemp;
+  dropdrownTemp: NestDropdownTemp;
   constructor(masterList: CellItemModel[]) {
     super(masterList);
     this.masterList = masterList;
@@ -27,8 +27,8 @@ export class CreateNest extends BaseNestClass {
     this.dtoTemp = new NestDtoTemp(masterList);
     this.entityTemp = new NestEntityTemp(masterList);
     this.moduleTemp = new NestModuleTemp(masterList);
-    this.responsTemp = new NestResponseTemp(masterList);
     this.serviceTemp = new NestServiceTemp(masterList);
+    this.dropdrownTemp = new NestDropdownTemp(masterList);
   }
   createNestApi() {
     this.createFile(this.controllerTemp.getTemplate(), "controller");
@@ -36,7 +36,7 @@ export class CreateNest extends BaseNestClass {
     this.createFile(this.dtoTemp.getTemplate(), "dto");
     this.createFile(this.entityTemp.getTemplate(), "entity");
     this.createFile(this.moduleTemp.getTemplate(), "module");
-    this.createFile(this.responsTemp.getTemplate(), "response");
+    this.createFile(this.dropdrownTemp.getTemplate(), "dropdown");
     this.createFile([], "varidation");
   }
   private createFile(template: string[], fileDescription: string) {
