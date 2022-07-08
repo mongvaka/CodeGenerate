@@ -24,15 +24,15 @@ import {
 import { DepartmentBusinessUnitService } from './department-business-unit.service';
 import { CreateDepartmentBusinessUnitDto, DeleteDepartmentBusinessUnitDto, SearchDepartmentBusinessUnitDto, UpdateDepartmentBusinessUnitDto } from './department-business-unit.dto';
 import { Users } from 'src/users/users.entity';
-@ApiTags('departmentBusinessUnit')
+@ApiTags('department-business-unit')
 @UseGuards(JwtAuthGuard)
 @ApiBearerAuth()
-@Controller('departmentBusinessUnit')
+@Controller('department-business-unit')
 export class DepartmentBusinessUnitController {
     constructor(private readonly departmentBusinessUnitService:DepartmentBusinessUnitService){
 
     }
-    @Get()
+    @Get('get-department-business-unit-list')
     @ApiBadGatewayResponse({description: MessageResponse.BAD_GATEWAY})
     @ApiInternalServerErrorResponse({description: MessageResponse.INTERNAL_SERVER_ERROR})
     findAll(@Query() query: SearchDepartmentBusinessUnitDto) {
@@ -40,7 +40,7 @@ export class DepartmentBusinessUnitController {
         return this.departmentBusinessUnitService.findFilter(query);
     }
 
-    @Get(':id')
+    @Get('get-department-business-unit-by-id/:id')
     @ApiParam({
       name: 'id',
       type: Number,
@@ -51,7 +51,7 @@ export class DepartmentBusinessUnitController {
       return await this.departmentBusinessUnitService.findById(id);
     }
   
-    @Post()
+    @Post('create-department-business-unit')
     @HttpCode(201)
     @ApiBody({type: CreateDepartmentBusinessUnitDto})
     @ApiCreatedResponse({
@@ -66,7 +66,7 @@ export class DepartmentBusinessUnitController {
       return await this.departmentBusinessUnitService.insert(dto);
     }
   
-    @Put(':id')
+    @Post('update-department-business-unit/:id')
     @HttpCode(200)
     @ApiParam({
       name: 'id',
@@ -88,7 +88,7 @@ export class DepartmentBusinessUnitController {
       return this.departmentBusinessUnitService.updated(dto);
     }
   
-    @Delete(':id')
+    @Post('delete-department-business-unit/:id')
     @ApiParam({
       name: 'id',
       type: Number,

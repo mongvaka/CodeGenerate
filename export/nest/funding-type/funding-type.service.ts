@@ -45,7 +45,7 @@ export class FundingTypeService {
       }
     
       async findFilter(dto: SearchFundingTypeDto): Promise<FundingTypePagenation> {
-        const _order = createOrderForBuilder('fundingType', dto.sortBy, dto.orderBy);
+        const _order = createOrderForBuilder('funding_type', dto.sortBy, dto.orderBy);
         const {skip, limit} = calculatePaging(dto.page, dto.size);
         const builder = this.fundingTypeRepository
           .createQueryBuilder('funding_type');

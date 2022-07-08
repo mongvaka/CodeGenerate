@@ -30,12 +30,12 @@ export const getFileFromExcelForNest = async (
         model.tableLabel = item[ColumnArrayNest.TABLE_LABEL];
         model.columnLabel = item[ColumnArrayNest.COLUMN_LABEL];
         model.mandatory =
-          item[ColumnArrayNest.MANDATORY] == BooleanType.YES ? true : false;
+          item[ColumnArrayNest.MANDATORY] == 'YES'? true : false;
         model.description = item[ColumnArrayNest.DESCRIPTION];
         model.lookupControl = item[ColumnArrayNest.COLUMN_TYPE];
-        model.create = item[ColumnArrayNest.CREATE];
-        model.update = item[ColumnArrayNest.UPDATE];
-        model.search = item[ColumnArrayNest.SEARCH_PARAM];
+        model.create = item[ColumnArrayNest.CREATE]=='YES';
+        model.update = item[ColumnArrayNest.UPDATE]=='YES';
+        model.search = item[ColumnArrayNest.SEARCH_PARAM]!=null;
         newDataList.push(model);
       }
       firstTime = false;

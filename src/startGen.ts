@@ -19,42 +19,47 @@ import { CreateNest } from "./writeFile/nestFile/createNest";
 export const startGenerate = async () => {
   // const masterList: CellItemModel[] = await getFileFromExcel([]);
 
-  const DEPARTMENT_BUSINESS_UNIT: CellItemModel[] =
-    await getFileFromExcelForNest("DEPARTMENT_BUSINESS_UNIT");
-  const FUNDING_TYPE: CellItemModel[] = await getFileFromExcelForNest(
-    "FUNDING_TYPE"
+  const DOC1: CellItemModel[] =
+    await getFileFromExcelForNest("SYSTEM_FEATURE");
+  const DOC2: CellItemModel[] = await getFileFromExcelForNest(
+    "FEATURE_GROUP"
   );
-  const DUMMY_SUPPLIER: CellItemModel[] = await getFileFromExcelForNest(
-    "DUMMY_SUPPLIER"
+  const DOC3: CellItemModel[] = await getFileFromExcelForNest(
+    "USER_PERMISSION"
   );
-  const SUPPLIE_GROUP: CellItemModel[] = await getFileFromExcelForNest(
-    "SUPPLIE_GROUP"
-  );
-  const SUPPLIER_CODE: CellItemModel[] = await getFileFromExcelForNest(
-    "SUPPLIER_CODE"
-  );
-  const CUSTOMER: CellItemModel[] = await getFileFromExcelForNest("CUSTOMER");
-  const REJECT_AND_CANCEL_REASON: CellItemModel[] =
-    await getFileFromExcelForNest("REJECT_AND_CANCEL_REASON");
+  // const DOC4: CellItemModel[] = await getFileFromExcelForNest(
+  //   "TTA_ANALYSIS"
+  // );
+  // const DOC5: CellItemModel[] = await getFileFromExcelForNest(
+  //   "CONTRACT"
+  // );
+  
+  // const DOC6: CellItemModel[] = await getFileFromExcelForNest("CONTRACT_HAS_FUNDING");
+  // const DOC7: CellItemModel[] =
+  //   await getFileFromExcelForNest("CONTRACT_TYPE");
+  //   const DOC8: CellItemModel[] =
+  //   await getFileFromExcelForNest("STORE");
   // const creatAngularService = new CreateAngular(masterList);
   // creatAngularService.createAngularWeb();
   // const createExpress = new CreateExpress(masterList);
   // createExpress.createExpressApi();
   // const createFlutter = new CreateFlutter(masterList);
   // createFlutter.createFlutterApp();
-  const createNest1 = new CreateNest(DEPARTMENT_BUSINESS_UNIT);
-  const createNest2 = new CreateNest(FUNDING_TYPE);
-  const createNest3 = new CreateNest(DUMMY_SUPPLIER);
-  const createNest4 = new CreateNest(SUPPLIE_GROUP);
-  const createNest5 = new CreateNest(SUPPLIER_CODE);
-  const createNest6 = new CreateNest(CUSTOMER);
-  const createNest7 = new CreateNest(REJECT_AND_CANCEL_REASON);
+  const createNest1 = new CreateNest(DOC1);
+   const createNest2 = new CreateNest(DOC2);
+  const createNest3 = new CreateNest(DOC3);
+  // const createNest4 = new CreateNest(DOC4);
+  // const createNest5 = new CreateNest(DOC5);
+  // const createNest6 = new CreateNest(DOC6);
+  // const createNest7 = new CreateNest(DOC7);
+  // const createNest8 = new CreateNest(DOC8);
 
   createNest1.createNestApi();
   createNest2.createNestApi();
   createNest3.createNestApi();
-  createNest4.createNestApi();
-  createNest5.createNestApi();
-  createNest6.createNestApi();
-  createNest7.createNestApi();
+  // createNest4.createNestApi();
+  // createNest5.createNestApi();
+  // createNest6.createNestApi();
+  // createNest7.createNestApi();
+  // createNest8.createNestApi();
 };

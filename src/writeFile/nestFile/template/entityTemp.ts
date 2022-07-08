@@ -28,7 +28,10 @@ export class NestEntityTemp extends BaseNestClass {
     columnEntity.forEach((item) => {
       const nullable: boolean = item.mandatory;
       const columnType: string = this.getDataType(item.dataType);
-      const fieldName: string = item.columnName.toLocaleLowerCase();
+      const snake: string =   item.columnName.toLocaleLowerCase();
+      const pas: string =   this.getPascalCase(snake)
+      const camel: string =   this.getCamelCase(pas)
+
       const typeScriptDataType = this.getTypeScriptDataType(item.dataType);
       this.t.push(`    @Column({name:'${item.columnName}',`);
       this.t.push(`    nullable:${nullable},`);
@@ -44,14 +47,14 @@ export class NestEntityTemp extends BaseNestClass {
         this.t.push(`    default: 0.0,`);
       }
       this.t.push(`    })`);
-      this.t.push(`    ${fieldName}: ${typeScriptDataType}`);
+      this.t.push(`    ${camel}: ${typeScriptDataType}`);
       this.t.push(``);
     });
 
     this.t.push(`}`);
   }
   getColumnEntityList(masterList: CellItemModel[]): CellItemModel[] {
-    const entityList = masterList.filter((fl) => fl.lookupControl != "PK");
+    const entityList = masterList.filter((fl) => fl.lookupControl != "PK"&& fl.create);
     return entityList;
   }
 }

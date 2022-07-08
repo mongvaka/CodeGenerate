@@ -62,7 +62,7 @@ export class BaseNestClass {
   getDataType(datadaseType: string): string {
     switch (datadaseType) {
       case ColumnTypeNest.BOOLEAN:
-        return "boolean";
+        return "bit";
       case ColumnTypeNest.DATE:
         return "timestamp";
       case ColumnTypeNest.DECIMAL:

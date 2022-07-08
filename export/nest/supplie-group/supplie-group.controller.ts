@@ -24,15 +24,15 @@ import {
 import { SupplieGroupService } from './supplie-group.service';
 import { CreateSupplieGroupDto, DeleteSupplieGroupDto, SearchSupplieGroupDto, UpdateSupplieGroupDto } from './supplie-group.dto';
 import { Users } from 'src/users/users.entity';
-@ApiTags('supplieGroup')
+@ApiTags('supplie-group')
 @UseGuards(JwtAuthGuard)
 @ApiBearerAuth()
-@Controller('supplieGroup')
+@Controller('supplie-group')
 export class SupplieGroupController {
     constructor(private readonly supplieGroupService:SupplieGroupService){
 
     }
-    @Get()
+    @Get('get-supplie-group-list')
     @ApiBadGatewayResponse({description: MessageResponse.BAD_GATEWAY})
     @ApiInternalServerErrorResponse({description: MessageResponse.INTERNAL_SERVER_ERROR})
     findAll(@Query() query: SearchSupplieGroupDto) {
@@ -40,7 +40,7 @@ export class SupplieGroupController {
         return this.supplieGroupService.findFilter(query);
     }
 
-    @Get(':id')
+    @Get('get-supplie-group-by-id/:id')
     @ApiParam({
       name: 'id',
       type: Number,
@@ -51,7 +51,7 @@ export class SupplieGroupController {
       return await this.supplieGroupService.findById(id);
     }
   
-    @Post()
+    @Post('create-supplie-group')
     @HttpCode(201)
     @ApiBody({type: CreateSupplieGroupDto})
     @ApiCreatedResponse({
@@ -66,7 +66,7 @@ export class SupplieGroupController {
       return await this.supplieGroupService.insert(dto);
     }
   
-    @Put(':id')
+    @Post('update-supplie-group/:id')
     @HttpCode(200)
     @ApiParam({
       name: 'id',
@@ -88,7 +88,7 @@ export class SupplieGroupController {
       return this.supplieGroupService.updated(dto);
     }
   
-    @Delete(':id')
+    @Post('delete-supplie-group/:id')
     @ApiParam({
       name: 'id',
       type: Number,

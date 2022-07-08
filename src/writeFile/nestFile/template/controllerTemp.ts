@@ -71,7 +71,7 @@ export class NestControllerTemp extends BaseNestClass {
     );
     this.t.push(`    }`);
     this.t.push(``);
-    this.t.push(`    @Get('get-${this.fileName}-by-id/:id')`);
+    this.t.push(`    @Get(':id')`);
     this.t.push(`    @ApiParam({`);
     this.t.push(`      name: 'id',`);
     this.t.push(`      type: Number,`);
@@ -84,7 +84,7 @@ export class NestControllerTemp extends BaseNestClass {
     );
     this.t.push(`    }`);
     this.t.push(`  `);
-    this.t.push(`    @Post(create-${this.fileName})`);
+    this.t.push(`    @Post()`);
     this.t.push(`    @HttpCode(201)`);
     this.t.push(`    @ApiBody({type: Create${this.pascalCae}Dto})`);
     this.t.push(`    @ApiCreatedResponse({`);
@@ -107,7 +107,7 @@ export class NestControllerTemp extends BaseNestClass {
     );
     this.t.push(`    }`);
     this.t.push(`  `);
-    this.t.push(`    @Post('update-${this.fileName}/:id')`);
+    this.t.push(`    @Put(':id')`);
     this.t.push(`    @HttpCode(200)`);
     this.t.push(`    @ApiParam({`);
     this.t.push(`      name: 'id',`);
@@ -133,7 +133,7 @@ export class NestControllerTemp extends BaseNestClass {
     this.t.push(`      return this.${this.camelCase}Service.updated(dto);`);
     this.t.push(`    }`);
     this.t.push(`  `);
-    this.t.push(`    @Delete('delete-${this.fileName}/:id')`);
+    this.t.push(`    @Delete(':id')`);
     this.t.push(`    @ApiParam({`);
     this.t.push(`      name: 'id',`);
     this.t.push(`      type: Number,`);

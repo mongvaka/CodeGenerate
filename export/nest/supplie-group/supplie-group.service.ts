@@ -45,7 +45,7 @@ export class SupplieGroupService {
       }
     
       async findFilter(dto: SearchSupplieGroupDto): Promise<SupplieGroupPagenation> {
-        const _order = createOrderForBuilder('supplieGroup', dto.sortBy, dto.orderBy);
+        const _order = createOrderForBuilder('supplie_group', dto.sortBy, dto.orderBy);
         const {skip, limit} = calculatePaging(dto.page, dto.size);
         const builder = this.supplieGroupRepository
           .createQueryBuilder('supplie_group');

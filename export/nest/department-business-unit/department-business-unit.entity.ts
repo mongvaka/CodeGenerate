@@ -5,51 +5,27 @@ export class DepartmentBusinessUnit extends BasicData{
     @PrimaryGeneratedColumn({type:'bigint', name:'ID'})
     id :number;
     @Column({name:'TYPE',
-    nullable:false,
+    nullable:true,
     type: 'varchar',
     })
     type: string
 
     @Column({name:'CODE',
-    nullable:false,
+    nullable:true,
     type: 'varchar',
     })
     code: string
 
     @Column({name:'DESCRIPTION',
-    nullable:false,
+    nullable:true,
     type: 'varchar',
     })
     description: string
 
     @Column({name:'ACTIVE',
-    nullable:false,
-    type: 'boolean',
+    nullable:true,
+    type: 'bit',
     })
     active: boolean
-
-    @Column({name:'CREATED_AT',
-    nullable:false,
-    type: 'timestamp',
-    })
-    created_at: Date
-
-    @Column({name:'CREATED_BY',
-    nullable:false,
-    type: 'varchar',
-    })
-    created_by: string
-
-    @Column({name:'UPDATED_AT',
-    nullable:false,
-    type: 'timestamp',
-    })
-    updated_at: Date
-
-    @Column({name:'UPDATED_BY',
-    nullable:false,
-    type: 'varchar',
-    })
-    updated_by: string
 
 }

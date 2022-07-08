@@ -5,19 +5,19 @@ export class RejectAndCancelReason extends BasicData{
     @PrimaryGeneratedColumn({type:'bigint', name:'ID'})
     id :number;
     @Column({name:'REASON_TYPE_ID',
-    nullable:false,
+    nullable:true,
     type: 'bigint',
     })
-    reason_type_id: number
+    reasonTypeId: number
 
     @Column({name:'CODE',
-    nullable:false,
+    nullable:true,
     type: 'varchar',
     })
     code: string
 
     @Column({name:'DESCRIPTION',
-    nullable:false,
+    nullable:true,
     type: 'varchar',
     })
     description: string
@@ -29,33 +29,9 @@ export class RejectAndCancelReason extends BasicData{
     remark: string
 
     @Column({name:'ACTIVE',
-    nullable:false,
-    type: 'boolean',
+    nullable:true,
+    type: 'bit',
     })
     active: boolean
-
-    @Column({name:'CREATED_AT',
-    nullable:false,
-    type: 'timestamp',
-    })
-    created_at: Date
-
-    @Column({name:'CREATED_BY',
-    nullable:false,
-    type: 'varchar',
-    })
-    created_by: string
-
-    @Column({name:'UPDATED_AT',
-    nullable:false,
-    type: 'timestamp',
-    })
-    updated_at: Date
-
-    @Column({name:'UPDATED_BY',
-    nullable:false,
-    type: 'varchar',
-    })
-    updated_by: string
 
 }

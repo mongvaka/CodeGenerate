@@ -3,17 +3,17 @@ import {BaseSearchDataDto} from "../shared/dtos/base-search-data.dto";
 import {ApiProperty, ApiPropertyOptional} from "@nestjs/swagger";
 import {IsString} from "class-validator";
 export class CustomerDto extends BasicDataDto{
-    @ApiPropertyOptional({type: Number,description:'Code ของ Customer'})
+    @ApiProperty({type: Number,description:'Code ของ Customer'})
     code: number
-    @ApiPropertyOptional({type: String,description:'ชื่อของ Customer'})
+    @ApiProperty({type: String,description:'ชื่อของ Customer'})
     name: string
     @ApiPropertyOptional({type: String,description:'ชื่อของ Customer ที่ใช้สำหรับการติดต่อ'})
-    contact_person_name: string
+    contactPersonName: string
     @ApiPropertyOptional({type: String,description:'ตำแหน่งของ Customer ที่ใช้สำหรับการติดต่อ'})
-    contact_person_title: string
-    @ApiPropertyOptional({type: String,description:'ที่อยู่ของ Customer'})
+    contactPersonTitle: string
+    @ApiProperty({type: String,description:'ที่อยู่ของ Customer'})
     address: string
-    @ApiPropertyOptional({type: String,description:'เบอร์โทรศัพท์สำหรับการติดต่อ Customer'})
+    @ApiProperty({type: String,description:'เบอร์โทรศัพท์สำหรับการติดต่อ Customer'})
     telephone: string
     @ApiPropertyOptional({type: String,description:'เบอร์โทรศัพท์มือถือสำหรับการติดต่อ Customer'})
     mobile: string
@@ -23,23 +23,21 @@ export class CustomerDto extends BasicDataDto{
     email: string
     @ApiPropertyOptional({type: String,description:'หมายเหตุสำหรับข้อมูล Customer'})
     remark: string
-    @ApiPropertyOptional({type: Date,description:'วัน เดือน ปี และเวลา ณ วันที่ที่ทำการอัปเดตข้อมูล Customer'})
-    updated_at: Date
-    @ApiPropertyOptional({type: String,description:'ชื่อผู้ใช้งานที่ทำการอัปเดตข้อมูล Customer'})
-    updated_by: string
 }
 export class CreateCustomerDto extends CustomerDto{
-    @ApiPropertyOptional({type: Number,description:'Code ของ Customer'})
+    @ApiPropertyOptional({type:Number})
+    id:number;
+    @ApiProperty({type: Number,description:'Code ของ Customer'})
     code: number
-    @ApiPropertyOptional({type: String,description:'ชื่อของ Customer'})
+    @ApiProperty({type: String,description:'ชื่อของ Customer'})
     name: string
     @ApiPropertyOptional({type: String,description:'ชื่อของ Customer ที่ใช้สำหรับการติดต่อ'})
-    contact_person_name: string
+    contactPersonName: string
     @ApiPropertyOptional({type: String,description:'ตำแหน่งของ Customer ที่ใช้สำหรับการติดต่อ'})
-    contact_person_title: string
-    @ApiPropertyOptional({type: String,description:'ที่อยู่ของ Customer'})
+    contactPersonTitle: string
+    @ApiProperty({type: String,description:'ที่อยู่ของ Customer'})
     address: string
-    @ApiPropertyOptional({type: String,description:'เบอร์โทรศัพท์สำหรับการติดต่อ Customer'})
+    @ApiProperty({type: String,description:'เบอร์โทรศัพท์สำหรับการติดต่อ Customer'})
     telephone: string
     @ApiPropertyOptional({type: String,description:'เบอร์โทรศัพท์มือถือสำหรับการติดต่อ Customer'})
     mobile: string
@@ -51,19 +49,19 @@ export class CreateCustomerDto extends CustomerDto{
     remark: string
 }
 export class UpdateCustomerDto extends BasicDataDto{
-    @ApiPropertyOptional({type: Number,description:'ID ประจำแต่ละ Customer ในฐานข้อมูล'})
+    @ApiProperty({type: Number,description:'ID ประจำแต่ละ Customer ในฐานข้อมูล'})
     id: number
-    @ApiPropertyOptional({type: Number,description:'Code ของ Customer'})
+    @ApiProperty({type: Number,description:'Code ของ Customer'})
     code: number
-    @ApiPropertyOptional({type: String,description:'ชื่อของ Customer'})
+    @ApiProperty({type: String,description:'ชื่อของ Customer'})
     name: string
     @ApiPropertyOptional({type: String,description:'ชื่อของ Customer ที่ใช้สำหรับการติดต่อ'})
-    contact_person_name: string
+    contactPersonName: string
     @ApiPropertyOptional({type: String,description:'ตำแหน่งของ Customer ที่ใช้สำหรับการติดต่อ'})
-    contact_person_title: string
-    @ApiPropertyOptional({type: String,description:'ที่อยู่ของ Customer'})
+    contactPersonTitle: string
+    @ApiProperty({type: String,description:'ที่อยู่ของ Customer'})
     address: string
-    @ApiPropertyOptional({type: String,description:'เบอร์โทรศัพท์สำหรับการติดต่อ Customer'})
+    @ApiProperty({type: String,description:'เบอร์โทรศัพท์สำหรับการติดต่อ Customer'})
     telephone: string
     @ApiPropertyOptional({type: String,description:'เบอร์โทรศัพท์มือถือสำหรับการติดต่อ Customer'})
     mobile: string

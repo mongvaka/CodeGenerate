@@ -32,7 +32,7 @@ export class CustomerController {
     constructor(private readonly customerService:CustomerService){
 
     }
-    @Get()
+    @Get('get-customer-list')
     @ApiBadGatewayResponse({description: MessageResponse.BAD_GATEWAY})
     @ApiInternalServerErrorResponse({description: MessageResponse.INTERNAL_SERVER_ERROR})
     findAll(@Query() query: SearchCustomerDto) {
@@ -40,7 +40,7 @@ export class CustomerController {
         return this.customerService.findFilter(query);
     }
 
-    @Get(':id')
+    @Get('get-customer-by-id/:id')
     @ApiParam({
       name: 'id',
       type: Number,
@@ -51,7 +51,7 @@ export class CustomerController {
       return await this.customerService.findById(id);
     }
   
-    @Post()
+    @Post('create-customer')
     @HttpCode(201)
     @ApiBody({type: CreateCustomerDto})
     @ApiCreatedResponse({
@@ -66,7 +66,7 @@ export class CustomerController {
       return await this.customerService.insert(dto);
     }
   
-    @Put(':id')
+    @Post('update-customer/:id')
     @HttpCode(200)
     @ApiParam({
       name: 'id',
@@ -88,7 +88,7 @@ export class CustomerController {
       return this.customerService.updated(dto);
     }
   
-    @Delete(':id')
+    @Post('delete-customer/:id')
     @ApiParam({
       name: 'id',
       type: Number,

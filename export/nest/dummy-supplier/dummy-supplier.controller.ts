@@ -24,15 +24,15 @@ import {
 import { DummySupplierService } from './dummy-supplier.service';
 import { CreateDummySupplierDto, DeleteDummySupplierDto, SearchDummySupplierDto, UpdateDummySupplierDto } from './dummy-supplier.dto';
 import { Users } from 'src/users/users.entity';
-@ApiTags('dummySupplier')
+@ApiTags('dummy-supplier')
 @UseGuards(JwtAuthGuard)
 @ApiBearerAuth()
-@Controller('dummySupplier')
+@Controller('dummy-supplier')
 export class DummySupplierController {
     constructor(private readonly dummySupplierService:DummySupplierService){
 
     }
-    @Get()
+    @Get('get-dummy-supplier-list')
     @ApiBadGatewayResponse({description: MessageResponse.BAD_GATEWAY})
     @ApiInternalServerErrorResponse({description: MessageResponse.INTERNAL_SERVER_ERROR})
     findAll(@Query() query: SearchDummySupplierDto) {
@@ -40,7 +40,7 @@ export class DummySupplierController {
         return this.dummySupplierService.findFilter(query);
     }
 
-    @Get(':id')
+    @Get('get-dummy-supplier-by-id/:id')
     @ApiParam({
       name: 'id',
       type: Number,
@@ -51,7 +51,7 @@ export class DummySupplierController {
       return await this.dummySupplierService.findById(id);
     }
   
-    @Post()
+    @Post('create-dummy-supplier')
     @HttpCode(201)
     @ApiBody({type: CreateDummySupplierDto})
     @ApiCreatedResponse({
@@ -66,7 +66,7 @@ export class DummySupplierController {
       return await this.dummySupplierService.insert(dto);
     }
   
-    @Put(':id')
+    @Post('update-dummy-supplier/:id')
     @HttpCode(200)
     @ApiParam({
       name: 'id',
@@ -88,7 +88,7 @@ export class DummySupplierController {
       return this.dummySupplierService.updated(dto);
     }
   
-    @Delete(':id')
+    @Post('delete-dummy-supplier/:id')
     @ApiParam({
       name: 'id',
       type: Number,

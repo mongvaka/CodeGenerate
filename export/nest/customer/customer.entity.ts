@@ -5,13 +5,13 @@ export class Customer extends BasicData{
     @PrimaryGeneratedColumn({type:'bigint', name:'ID'})
     id :number;
     @Column({name:'CODE',
-    nullable:false,
+    nullable:true,
     type: 'bigint',
     })
     code: number
 
     @Column({name:'NAME',
-    nullable:false,
+    nullable:true,
     type: 'varchar',
     })
     name: string
@@ -20,22 +20,22 @@ export class Customer extends BasicData{
     nullable:false,
     type: 'varchar',
     })
-    contact_person_name: string
+    contactPersonName: string
 
     @Column({name:'CONTACT_PERSON_TITLE',
     nullable:false,
     type: 'varchar',
     })
-    contact_person_title: string
+    contactPersonTitle: string
 
     @Column({name:'ADDRESS',
-    nullable:false,
+    nullable:true,
     type: 'varchar',
     })
     address: string
 
     @Column({name:'TELEPHONE',
-    nullable:false,
+    nullable:true,
     type: 'varchar',
     })
     telephone: string
@@ -63,17 +63,5 @@ export class Customer extends BasicData{
     type: 'varchar',
     })
     remark: string
-
-    @Column({name:'UPDATED_AT',
-    nullable:false,
-    type: 'timestamp',
-    })
-    updated_at: Date
-
-    @Column({name:'UPDATED_BY',
-    nullable:false,
-    type: 'varchar',
-    })
-    updated_by: string
 
 }

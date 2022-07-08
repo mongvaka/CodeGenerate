@@ -24,15 +24,15 @@ import {
 import { FundingTypeService } from './funding-type.service';
 import { CreateFundingTypeDto, DeleteFundingTypeDto, SearchFundingTypeDto, UpdateFundingTypeDto } from './funding-type.dto';
 import { Users } from 'src/users/users.entity';
-@ApiTags('fundingType')
+@ApiTags('funding-type')
 @UseGuards(JwtAuthGuard)
 @ApiBearerAuth()
-@Controller('fundingType')
+@Controller('funding-type')
 export class FundingTypeController {
     constructor(private readonly fundingTypeService:FundingTypeService){
 
     }
-    @Get()
+    @Get('get-funding-type-list')
     @ApiBadGatewayResponse({description: MessageResponse.BAD_GATEWAY})
     @ApiInternalServerErrorResponse({description: MessageResponse.INTERNAL_SERVER_ERROR})
     findAll(@Query() query: SearchFundingTypeDto) {
@@ -40,7 +40,7 @@ export class FundingTypeController {
         return this.fundingTypeService.findFilter(query);
     }
 
-    @Get(':id')
+    @Get('get-funding-type-by-id/:id')
     @ApiParam({
       name: 'id',
       type: Number,
@@ -51,7 +51,7 @@ export class FundingTypeController {
       return await this.fundingTypeService.findById(id);
     }
   
-    @Post()
+    @Post('create-funding-type')
     @HttpCode(201)
     @ApiBody({type: CreateFundingTypeDto})
     @ApiCreatedResponse({
@@ -66,7 +66,7 @@ export class FundingTypeController {
       return await this.fundingTypeService.insert(dto);
     }
   
-    @Put(':id')
+    @Post('update-funding-type/:id')
     @HttpCode(200)
     @ApiParam({
       name: 'id',
@@ -88,7 +88,7 @@ export class FundingTypeController {
       return this.fundingTypeService.updated(dto);
     }
   
-    @Delete(':id')
+    @Post('delete-funding-type/:id')
     @ApiParam({
       name: 'id',
       type: Number,

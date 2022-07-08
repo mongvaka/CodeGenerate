@@ -14,7 +14,7 @@ export class NestDtoTemp extends BaseNestClass {
   }
   private initialDataItemPage() {
     const allField: CellItemModel[] = this.masterList.filter(
-      (fl) => fl.lookupControl != "PK" && !fl.readonlyOnCreate
+      (fl) => fl.dataType != 'FK' && fl.create
     );
     const createFiled: CellItemModel[] = this.masterList.filter(
       (fl) => fl.create
@@ -39,7 +39,9 @@ export class NestDtoTemp extends BaseNestClass {
     allField.forEach((item) => {
       const dataTypeUpper: string = this.getDataTypeUpper(item.dataType);
       const dataType: string = this.getTypeScriptDataType(item.dataType);
-      const columnNameSnake: string = item.columnName.toLocaleLowerCase();
+      const snake: string =   item.columnName.toLocaleLowerCase();
+      const pas: string =   this.getPascalCase(snake)
+      const camel: string =   this.getCamelCase(pas)
       const description: string = item.description;
       const poperty: string = item.mandatory
         ? "ApiProperty"
@@ -48,7 +50,7 @@ export class NestDtoTemp extends BaseNestClass {
       this.t.push(
         `    @${poperty}({type: ${dataTypeUpper},description:'${description}'})`
       );
-      this.t.push(`    ${columnNameSnake}: ${dataType}`);
+      this.t.push(`    ${camel}: ${dataType}`);
     });
     this.t.push(`}`);
 
@@ -58,7 +60,9 @@ export class NestDtoTemp extends BaseNestClass {
     createFiled.forEach((item) => {
       const dataTypeUpper: string = this.getDataTypeUpper(item.dataType);
       const dataType: string = this.getTypeScriptDataType(item.dataType);
-      const columnNameSnake: string = item.columnName.toLocaleLowerCase();
+      const snake: string =   item.columnName.toLocaleLowerCase();
+      const pas: string =   this.getPascalCase(snake)
+      const camel: string =   this.getCamelCase(pas)
       const description: string = item.description;
       const poperty: string = item.mandatory
         ? "ApiProperty"
@@ -67,7 +71,7 @@ export class NestDtoTemp extends BaseNestClass {
       this.t.push(
         `    @${poperty}({type: ${dataTypeUpper},description:'${description}'})`
       );
-      this.t.push(`    ${columnNameSnake}: ${dataType}`);
+      this.t.push(`    ${camel}: ${dataType}`);
     });
 
     this.t.push(`}`);
@@ -78,7 +82,9 @@ export class NestDtoTemp extends BaseNestClass {
     updateFiled.forEach((item) => {
       const dataTypeUpper: string = this.getDataTypeUpper(item.dataType);
       const dataType: string = this.getTypeScriptDataType(item.dataType);
-      const columnNameSnake: string = item.columnName.toLocaleLowerCase();
+      const snake: string =   item.columnName.toLocaleLowerCase();
+      const pas: string =   this.getPascalCase(snake)
+      const camel: string =   this.getCamelCase(pas)
       const description: string = item.description;
       const poperty: string = item.mandatory
         ? "ApiProperty"
@@ -87,7 +93,7 @@ export class NestDtoTemp extends BaseNestClass {
       this.t.push(
         `    @${poperty}({type: ${dataTypeUpper},description:'${description}'})`
       );
-      this.t.push(`    ${columnNameSnake}: ${dataType}`);
+      this.t.push(`    ${camel}: ${dataType}`);
     });
 
     this.t.push(`}`);
@@ -103,16 +109,16 @@ export class NestDtoTemp extends BaseNestClass {
     searchFiled.forEach((item) => {
       const dataTypeUpper: string = this.getDataTypeUpper(item.dataType);
       const dataType: string = this.getTypeScriptDataType(item.dataType);
-      const columnNameSnake: string = item.columnName.toLocaleLowerCase();
+      const snake: string =   item.columnName.toLocaleLowerCase();
+      const pas: string =   this.getPascalCase(snake)
+      const camel: string =   this.getCamelCase(pas)
       const description: string = item.description;
-      const poperty: string = item.mandatory
-        ? "ApiProperty"
-        : "ApiPropertyOptional";
+      const poperty: string =  "ApiPropertyOptional";
 
       this.t.push(
         `    @${poperty}({type: ${dataTypeUpper},description:'${description}'})`
       );
-      this.t.push(`    ${columnNameSnake}: ${dataType}`);
+      this.t.push(`    ${camel}: ${dataType}`);
     });
     this.t.push(`}`);
   }

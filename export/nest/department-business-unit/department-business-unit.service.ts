@@ -45,7 +45,7 @@ export class DepartmentBusinessUnitService {
       }
     
       async findFilter(dto: SearchDepartmentBusinessUnitDto): Promise<DepartmentBusinessUnitPagenation> {
-        const _order = createOrderForBuilder('departmentBusinessUnit', dto.sortBy, dto.orderBy);
+        const _order = createOrderForBuilder('department_business_unit', dto.sortBy, dto.orderBy);
         const {skip, limit} = calculatePaging(dto.page, dto.size);
         const builder = this.departmentBusinessUnitRepository
           .createQueryBuilder('department_business_unit');

@@ -89,7 +89,7 @@ export class NestServiceTemp extends BaseNestClass {
       `      async findFilter(dto: Search${this.pascalCae}Dto): Promise<${this.pascalCae}Pagenation> {`
     );
     this.t.push(
-      `        const _order = createOrderForBuilder('${this.camelCase}', dto.sortBy, dto.orderBy);`
+      `        const _order = createOrderForBuilder('${this.snakeCase}', dto.sortBy, dto.orderBy);`
     );
     this.t.push(
       `        const {skip, limit} = calculatePaging(dto.page, dto.size);`

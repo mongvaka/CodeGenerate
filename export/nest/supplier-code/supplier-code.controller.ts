@@ -24,15 +24,15 @@ import {
 import { SupplierCodeService } from './supplier-code.service';
 import { CreateSupplierCodeDto, DeleteSupplierCodeDto, SearchSupplierCodeDto, UpdateSupplierCodeDto } from './supplier-code.dto';
 import { Users } from 'src/users/users.entity';
-@ApiTags('supplierCode')
+@ApiTags('supplier-code')
 @UseGuards(JwtAuthGuard)
 @ApiBearerAuth()
-@Controller('supplierCode')
+@Controller('supplier-code')
 export class SupplierCodeController {
     constructor(private readonly supplierCodeService:SupplierCodeService){
 
     }
-    @Get()
+    @Get('get-supplier-code-list')
     @ApiBadGatewayResponse({description: MessageResponse.BAD_GATEWAY})
     @ApiInternalServerErrorResponse({description: MessageResponse.INTERNAL_SERVER_ERROR})
     findAll(@Query() query: SearchSupplierCodeDto) {
@@ -40,7 +40,7 @@ export class SupplierCodeController {
         return this.supplierCodeService.findFilter(query);
     }
 
-    @Get(':id')
+    @Get('get-supplier-code-by-id/:id')
     @ApiParam({
       name: 'id',
       type: Number,
@@ -51,7 +51,7 @@ export class SupplierCodeController {
       return await this.supplierCodeService.findById(id);
     }
   
-    @Post()
+    @Post('create-supplier-code')
     @HttpCode(201)
     @ApiBody({type: CreateSupplierCodeDto})
     @ApiCreatedResponse({
@@ -66,7 +66,7 @@ export class SupplierCodeController {
       return await this.supplierCodeService.insert(dto);
     }
   
-    @Put(':id')
+    @Post('update-supplier-code/:id')
     @HttpCode(200)
     @ApiParam({
       name: 'id',
@@ -88,7 +88,7 @@ export class SupplierCodeController {
       return this.supplierCodeService.updated(dto);
     }
   
-    @Delete(':id')
+    @Post('delete-supplier-code/:id')
     @ApiParam({
       name: 'id',
       type: Number,

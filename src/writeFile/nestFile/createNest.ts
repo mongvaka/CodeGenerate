@@ -22,12 +22,6 @@ export class CreateNest extends BaseNestClass {
   constructor(masterList: CellItemModel[]) {
     super(masterList);
     this.masterList = masterList;
-    // console.log("pascalCae : ", this.pascalCae);
-    // console.log("camelCase : ", this.camelCase);
-    // console.log("snakeCase : ", this.snakeCase);
-    // console.log("fileName : ", this.fileName);
-    // console.log("lowerCase : ", this.lowerCase);
-
     this.createFileService = new CreateFileService();
     this.controllerTemp = new NestControllerTemp(masterList);
     this.dtoTemp = new NestDtoTemp(masterList);
@@ -43,7 +37,7 @@ export class CreateNest extends BaseNestClass {
     this.createFile(this.entityTemp.getTemplate(), "entity");
     this.createFile(this.moduleTemp.getTemplate(), "module");
     this.createFile(this.responsTemp.getTemplate(), "response");
-    this.createFile([], ".varidation");
+    this.createFile([], "varidation");
   }
   private createFile(template: string[], fileDescription: string) {
     const directory: string = `export/nest/${this.fileName}`;

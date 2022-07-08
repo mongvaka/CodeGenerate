@@ -45,7 +45,7 @@ export class DummySupplierService {
       }
     
       async findFilter(dto: SearchDummySupplierDto): Promise<DummySupplierPagenation> {
-        const _order = createOrderForBuilder('dummySupplier', dto.sortBy, dto.orderBy);
+        const _order = createOrderForBuilder('dummy_supplier', dto.sortBy, dto.orderBy);
         const {skip, limit} = calculatePaging(dto.page, dto.size);
         const builder = this.dummySupplierRepository
           .createQueryBuilder('dummy_supplier');

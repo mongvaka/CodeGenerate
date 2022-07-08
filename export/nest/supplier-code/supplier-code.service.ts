@@ -45,7 +45,7 @@ export class SupplierCodeService {
       }
     
       async findFilter(dto: SearchSupplierCodeDto): Promise<SupplierCodePagenation> {
-        const _order = createOrderForBuilder('supplierCode', dto.sortBy, dto.orderBy);
+        const _order = createOrderForBuilder('supplier_code', dto.sortBy, dto.orderBy);
         const {skip, limit} = calculatePaging(dto.page, dto.size);
         const builder = this.supplierCodeRepository
           .createQueryBuilder('supplier_code');

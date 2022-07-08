@@ -24,15 +24,15 @@ import {
 import { RejectAndCancelReasonService } from './reject-and-cancel-reason.service';
 import { CreateRejectAndCancelReasonDto, DeleteRejectAndCancelReasonDto, SearchRejectAndCancelReasonDto, UpdateRejectAndCancelReasonDto } from './reject-and-cancel-reason.dto';
 import { Users } from 'src/users/users.entity';
-@ApiTags('rejectAndCancelReason')
+@ApiTags('reject-and-cancel-reason')
 @UseGuards(JwtAuthGuard)
 @ApiBearerAuth()
-@Controller('rejectAndCancelReason')
+@Controller('reject-and-cancel-reason')
 export class RejectAndCancelReasonController {
     constructor(private readonly rejectAndCancelReasonService:RejectAndCancelReasonService){
 
     }
-    @Get()
+    @Get('get-reject-and-cancel-reason-list')
     @ApiBadGatewayResponse({description: MessageResponse.BAD_GATEWAY})
     @ApiInternalServerErrorResponse({description: MessageResponse.INTERNAL_SERVER_ERROR})
     findAll(@Query() query: SearchRejectAndCancelReasonDto) {
@@ -40,7 +40,7 @@ export class RejectAndCancelReasonController {
         return this.rejectAndCancelReasonService.findFilter(query);
     }
 
-    @Get(':id')
+    @Get('get-reject-and-cancel-reason-by-id/:id')
     @ApiParam({
       name: 'id',
       type: Number,
@@ -51,7 +51,7 @@ export class RejectAndCancelReasonController {
       return await this.rejectAndCancelReasonService.findById(id);
     }
   
-    @Post()
+    @Post('create-reject-and-cancel-reason')
     @HttpCode(201)
     @ApiBody({type: CreateRejectAndCancelReasonDto})
     @ApiCreatedResponse({
@@ -66,7 +66,7 @@ export class RejectAndCancelReasonController {
       return await this.rejectAndCancelReasonService.insert(dto);
     }
   
-    @Put(':id')
+    @Post('update-reject-and-cancel-reason/:id')
     @HttpCode(200)
     @ApiParam({
       name: 'id',
@@ -88,7 +88,7 @@ export class RejectAndCancelReasonController {
       return this.rejectAndCancelReasonService.updated(dto);
     }
   
-    @Delete(':id')
+    @Post('delete-reject-and-cancel-reason/:id')
     @ApiParam({
       name: 'id',
       type: Number,

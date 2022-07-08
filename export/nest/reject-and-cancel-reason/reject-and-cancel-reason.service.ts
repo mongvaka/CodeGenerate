@@ -45,7 +45,7 @@ export class RejectAndCancelReasonService {
       }
     
       async findFilter(dto: SearchRejectAndCancelReasonDto): Promise<RejectAndCancelReasonPagenation> {
-        const _order = createOrderForBuilder('rejectAndCancelReason', dto.sortBy, dto.orderBy);
+        const _order = createOrderForBuilder('reject_and_cancel_reason', dto.sortBy, dto.orderBy);
         const {skip, limit} = calculatePaging(dto.page, dto.size);
         const builder = this.rejectAndCancelReasonRepository
           .createQueryBuilder('reject_and_cancel_reason');
