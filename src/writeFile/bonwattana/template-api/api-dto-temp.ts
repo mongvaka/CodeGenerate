@@ -1,9 +1,9 @@
-import { CellItemModel } from "../../../model/cellModel";
+import { CellBwModel } from "../../../model/cellModel";
 import { BaseBoonwattanaClass } from "../base/base-boonwattana-class";
-export class NestDtoTemp extends BaseBoonwattanaClass {
-  private masterList: CellItemModel[];
+export class ApiDtoTemp extends BaseBoonwattanaClass {
+  private masterList: CellBwModel[];
   private t: string[];
-  constructor(masterList: CellItemModel[]) {
+  constructor(masterList: CellBwModel[]) {
     super(masterList);
     this.masterList = masterList;
     this.t = [];
@@ -13,41 +13,46 @@ export class NestDtoTemp extends BaseBoonwattanaClass {
     return this.t;
   }
   private initialDataItemPage() {
-    const allField: CellItemModel[] = this.masterList.filter(
-      (fl) => fl.dataType != 'FK' && fl.create
+    const createFiled: CellBwModel[] = this.masterList.filter(
+      (fl) => fl.CREATE
     );
-    const createFiled: CellItemModel[] = this.masterList.filter(
-      (fl) => fl.create
+    const updateFiled: CellBwModel[] = this.masterList.filter(
+      (fl) => fl.UPDATE
     );
-    const updateFiled: CellItemModel[] = this.masterList.filter(
-      (fl) => fl.update
-    );
-    const searchFiled: CellItemModel[] = this.masterList.filter(
-      (fl) => fl.search
+    const searchFiled: CellBwModel[] = this.masterList.filter(
+      (fl) => fl.SEARCH
     );
 
     this.t.push(`import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";`);
     this.t.push(`import { SearchParameter } from "src/shared/models/search-param-model";`);
     this.t.push(``);
-    this.t.push(`export class SearchDemoDto extends SearchParameter {`);
-    this.t.push(`    demoEmail:string`);
-    this.t.push(`    demoNumber:string`);
-    this.t.push(`    demoDate:string`);
-    this.t.push(`    demoEnum:string`);
+    this.t.push(`export class Search${this.pascalCae}Dto extends SearchParameter {`);
+    searchFiled.forEach(en=>{
+      const fieldName = this.getCamelCase(en.COLUMN_NAME)
+      const fieldType = this.getTypeScriptDataType(en.INPUT_TYPE)
+      this.t.push(`    ${fieldName}:${fieldType}`);
+    })
     this.t.push(`}`);
-    this.t.push(`export class DemoDto {`);
-    this.t.push(`    demoEmail:string`);
-    this.t.push(`    demoNumber:string`);
-    this.t.push(`    demoDate:string`);
-    this.t.push(`    demoEnum:string`);
+    this.t.push(`export class ${this.pascalCae}Dto {`);
+    this.masterList.forEach(en=>{
+      const fieldName = this.getCamelCase(en.COLUMN_NAME)
+      const fieldType = this.getTypeScriptDataType(en.INPUT_TYPE)
+      this.t.push(`    ${fieldName}:${fieldType}`);
+    })
     this.t.push(`} `);
-    this.t.push(`export class CreateDemoDto extends DemoDto{`);
-    this.t.push(``);
+    this.t.push(`export class Create${this.pascalCae}Dto extends ${this.pascalCae}Dto{`);
+    createFiled.forEach(en=>{
+      const fieldName = this.getCamelCase(en.COLUMN_NAME)
+      const fieldType = this.getTypeScriptDataType(en.INPUT_TYPE)
+      this.t.push(`    ${fieldName}:${fieldType}`);
+    })
     this.t.push(`}`);
-    this.t.push(`export class UpdateDemoDto extends DemoDto{`);
-    this.t.push(`    @ApiProperty()`);
-    this.t.push(`    id:number`);
-    this.t.push(``);
+    this.t.push(`export class Update${this.pascalCae}Dto extends ${this.pascalCae}Dto{`);
+    updateFiled.forEach(en=>{
+      const fieldName = this.getCamelCase(en.COLUMN_NAME)
+      const fieldType = this.getTypeScriptDataType(en.INPUT_TYPE)
+      this.t.push(`    ${fieldName}:${fieldType}`);
+    })
     this.t.push(`}`);
   }
 }

@@ -167,8 +167,6 @@ export const getConfig = (dataType: string) => {
   }
 };
 export const createDirectories = (path: string) => {
-  console.log("createDirectories");
-
   if (!fs.existsSync(path)) {
     fs.mkdirSync(path, { recursive: true });
   }

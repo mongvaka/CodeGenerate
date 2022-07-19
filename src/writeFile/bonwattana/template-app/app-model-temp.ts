@@ -1,9 +1,9 @@
-import { CellItemModel } from "../../../model/cellModel";
+import { CellBwModel } from "../../../model/cellModel";
 import { BaseBoonwattanaClass } from "../base/base-boonwattana-class";
 export class AppModelTemp extends BaseBoonwattanaClass {
-  private masterList: CellItemModel[];
+  private masterList: CellBwModel[];
   private t: string[];
-  constructor(masterList: CellItemModel[]) {
+  constructor(masterList: CellBwModel[]) {
     super(masterList);
     this.masterList = masterList;
     this.t = [];
@@ -13,20 +13,21 @@ export class AppModelTemp extends BaseBoonwattanaClass {
     return this.t;
   }
   private initialDataItemPage() {
-    this.t.push(`export class DemoListModel{`);
+    this.t.push(`export class ${this.pascalCae}ListModel{`);
     this.t.push(`    id:number`);
-    this.t.push(`    demoEmail: string;`);
-    this.t.push(`    demoNumber: number;`);
-    this.t.push(`    demoDate: Date;`);
-    this.t.push(`    demoEnum: string;`);
+    this.lists.forEach(el=>{
+      const columnName =  this.getCamelCase(el.COLUMN_NAME)
+      const fieldType = this.getTypeScriptDataType(el.INPUT_TYPE)
+      this.t.push(`    ${columnName}: ${fieldType};`);
+    })
     this.t.push(`}`);
-    this.t.push(`export class DemoItemModel{`);
+    this.t.push(`export class ${this.pascalCae}ItemModel{`);
     this.t.push(`    id:number`);
-    this.t.push(`    demoEmail: string;`);
-    this.t.push(`    demoNumber: number;`);
-    this.t.push(`    demoDate: Date;`);
-    this.t.push(`    demoEnum: number;`);
-    this.t.push(`    isActive:boolean`);
+    this.items.forEach(el=>{
+      const columnName =  this.getCamelCase(el.COLUMN_NAME)
+      const fieldType = this.getTypeScriptDataType(el.INPUT_TYPE)
+      this.t.push(`    ${columnName}: ${fieldType};`);
+    })
     this.t.push(`}`);
   }
 }

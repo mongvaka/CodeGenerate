@@ -1,5 +1,5 @@
-import { CellItemModel } from "src/model/cellModel";
-import { ColumnTypeNest } from "../../../shared/constans";
+import { CellBwModel, CellItemModel, Groups } from "src/model/cellModel";
+import { ColumnTypeNest, InputDataType, InputType } from "../../../shared/constans";
 export class BaseBoonwattanaClass {
   moduleName: string;
   camelCase: string;
@@ -8,56 +8,155 @@ export class BaseBoonwattanaClass {
   fileName: string;
   lowerCase: string;
   descriptionID: string;
+  foreigns:CellBwModel[]
+  enums:CellBwModel[]
+  lists:CellBwModel[]
+  items:CellBwModel[]
+  searchs:CellBwModel[]
+  groups:Groups[]
 
-  constructor(masterList: CellItemModel[]) {
-    this.moduleName = masterList[0].tableName;
-    this.descriptionID = masterList[0].description;
+  constructor(masterList: CellBwModel[]) {    
+    this.moduleName = masterList[0].TABLE_NAME;
+    this.descriptionID = masterList[0].TABLE_LABEL;
     this.snakeCase = this.getSnakeCase(this.moduleName);
     this.pascalCae = this.getPascalCase(this.snakeCase);
     this.camelCase = this.getCamelCase(this.pascalCae);
-
     this.fileName = this.getFileCase(this.snakeCase);
     this.lowerCase = this.getLowerCase(this.snakeCase);
+    this.foreigns = this.getForeigns(masterList);
+    this.enums = this.getEnums(masterList);
+    this.lists = this.getLists(masterList);
+    this.items = this.getItems(masterList);
+    this.searchs = this.getSearchs(masterList);
+    this.groups = this.getGroups(masterList)
+  }
+  getGroups(masterList: CellBwModel[]): Groups[] {
+    const groups:Groups[] = []
+    masterList.forEach((el,index)=>{
+      const model = groups.find(fn=>fn.groupName == el.GROUP_NAME)
+      const numIndex = this.getNumIndex(groups,el.GROUP_NAME)
+      if(model){
+        if(groups[numIndex].child){
+          groups[numIndex].child.push(el)
+
+        }else{
+
+          groups[index].child.push(el)
+
+        }
+      }else{
+        let group:Groups = {
+          groupName : el.GROUP_NAME,
+          ordering:el.GROUP_ORDER,
+          child : [el]
+        }
+        groups.push(group)
+
+      }
+
+    })
+    return groups
+  }
+  getNumIndex(groups: Groups[], GROUP_NAME: string) {
+    let index = 0
+    groups.forEach((el,dex )=>{
+      if(el.groupName == GROUP_NAME){
+        index =dex
+      }
+    })
+    return index;
+
+  }
+  getSearchs(masterList: CellBwModel[]): CellBwModel[] {
+    return masterList.filter(fl=>fl.SEARCH)
+  }
+  getItems(masterList: CellBwModel[]): CellBwModel[] {
+    return masterList.filter(fl=>fl.COLUMN_ORDER)
+  }
+  getLists(masterList: CellBwModel[]): CellBwModel[] {
+    return masterList.filter(fl=>fl.LIST_ORDER)
+  }
+  getEnums(masterList: CellBwModel[]): CellBwModel[] {
+    return masterList.filter(fl=>fl.INPUT_TYPE == InputDataType.ENUM)
+  }
+  getForeigns(masterList: CellBwModel[]): CellBwModel[] {
+    return masterList.filter(fl=>fl.INPUT_TYPE == InputDataType.FOREIGN)
   }
   getLowerCase(snakeCase: string): string {
     try {
-      console.log(snakeCase);
+      if(snakeCase){
+        return snakeCase.split("_").join("");
 
-      return snakeCase.split("_").join("");
+      }else{
+        return 'null'
+      }
     } catch (e) {
       console.log(e);
     }
   }
   getFileCase(snakeCase: string): string {
     try {
-      console.log(snakeCase);
+      if(snakeCase){
+        return snakeCase.split("_").join("-");
 
-      return snakeCase.split("_").join("-");
+      }else{
+        return 'null'
+      }
     } catch (e) {
       console.log(e);
     }
   }
   getSnakeCase(moduleName: string): string {
-    return moduleName.toLocaleLowerCase();
+    if(moduleName){
+      return moduleName.toLocaleLowerCase();
+
+    }else{
+      return 'null'
+    }
+  }
+  getUpperCase(moduleName: string): string {
+    if(moduleName){
+      return moduleName.toLocaleUpperCase();
+
+    }else{
+      return 'null'
+    }
   }
   getPascalCase(snakeCase: string): string {
-    console.log("strArr:", snakeCase);
+    if(snakeCase){
+      // const strArr = snakeCase.split("_");
+      // let temp = "";
+      // strArr.forEach((item) => {
+      //   temp = temp + item.charAt(0).toUpperCase() + item.slice(1);
+      // });
+      // return temp;
 
-    const strArr = snakeCase.split("_");
-    console.log("strArr:", strArr);
+      let convertLv1 = snakeCase
+    .replace(new RegExp(/[-_]+/, "g"), " ")
+    .replace(new RegExp(/[^\w\s]/, "g"), "")
+    .replace(
+      new RegExp(/\s+(.)(\w*)/, "g"),
+      ($1, $2, $3) => `${$2.toUpperCase() + $3.toLowerCase()}`
+    )
+    .replace(new RegExp(/\w/), (s) => s.toUpperCase());
+  let convertLv2 = convertLv1.replace(/\s/g, "");
+  return convertLv2;
+    }else{
+      return 'null'
+    }
 
-    let temp = "";
-    strArr.forEach((item) => {
-      temp = temp + item.charAt(0).toUpperCase() + item.slice(1);
-    });
-    return temp;
+    
   }
   getCamelCase(snakeCase: string): string {
-    const camelCase =
-      snakeCase.charAt(0).toLocaleLowerCase() + snakeCase.slice(1);
-    console.log("camelCase:", camelCase);
+    if(snakeCase){
 
-    return camelCase;
+    return snakeCase.toLowerCase()
+    .replace(/[^a-zA-Z0-9]+(.)/g, (m, chr) => chr.toUpperCase());;
+    }else{
+      return 'null'
+    }
+
+    
   }
   getDataType(datadaseType: string): string {
     switch (datadaseType) {
@@ -82,23 +181,64 @@ export class BaseBoonwattanaClass {
   }
   getTypeScriptDataType(datadaseType: string): string {
     switch (datadaseType) {
-      case ColumnTypeNest.BOOLEAN:
-        return "boolean";
-      case ColumnTypeNest.DATE:
+      case InputDataType.ENUM:
+        return "number";
+      case InputDataType.FOREIGN:
+        return "number";
+      case InputDataType.DECIMAL2:
+        return "number";
+      case InputDataType.DECIMAL4:
+        return "number";
+      case InputDataType.DECIMAL0:
+        return "number";
+      case InputDataType.DATE:
         return "Date";
-      case ColumnTypeNest.DECIMAL:
-        return "number";
-      case ColumnTypeNest.DECIMAL14_4:
-        return "number";
-      case ColumnTypeNest.INT:
-        return "number";
-      case ColumnTypeNest.VARCHAR:
+      case InputDataType.TIME:
         return "string";
-      case ColumnTypeNest.TEXT:
+      case InputDataType.BOOLEAN:
+        return "boolean";
+      case InputDataType.SHOT_TEXT:
+        return "string";
+      case InputDataType.LONG_TEXT:
+        return "string";
+      case InputDataType.EMAIL:
+        return "string";
+      case InputDataType.PHONE:
         return "string";
       default:
         console.log("error : Data type out of range :", datadaseType);
         return "any";
+    }
+  }
+  getInputType(datadaseType: string): string {
+    switch (datadaseType) {
+      case InputDataType.ENUM:
+        return "ENUM";
+      case InputDataType.FOREIGN:
+        return "ENUM";
+      case InputDataType.DECIMAL2:
+        return "DECIMAL_2";
+      case InputDataType.DECIMAL4:
+        return "DECIMAL_4";
+      case InputDataType.DECIMAL0:
+        return "INT";
+      case InputDataType.DATE:
+        return "DATE";
+      case InputDataType.TIME:
+        return "TIME";
+      case InputDataType.BOOLEAN:
+        return "BOOLEAN";
+      case InputDataType.SHOT_TEXT:
+        return "STRING";
+      case InputDataType.LONG_TEXT:
+        return "STRING";
+      case InputDataType.EMAIL:
+        return "STRING";
+      case InputDataType.PHONE:
+        return "STRING";
+      default:
+        console.log("error : Data type out of range :", datadaseType);
+        return "STRING";
     }
   }
   getDataTypeUpper(datadaseType: string): string {

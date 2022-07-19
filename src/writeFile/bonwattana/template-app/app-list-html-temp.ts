@@ -1,9 +1,9 @@
-import { CellItemModel } from "../../../model/cellModel";
+import { CellBwModel } from "../../../model/cellModel";
 import { BaseBoonwattanaClass } from "../base/base-boonwattana-class";
 export class AppListHtmlTemp extends BaseBoonwattanaClass {
-  private masterList: CellItemModel[];
+  private masterList: CellBwModel[];
   private t: string[];
-  constructor(masterList: CellItemModel[]) {
+  constructor(masterList: CellBwModel[]) {
     super(masterList);
     this.masterList = masterList;
     this.t = [];

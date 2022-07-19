@@ -24,3 +24,29 @@ export class CellItemModel {
   description: string;
   search: boolean;
 }
+export class CellBwModel{
+  TABLE_NAME : string;
+  COLUMN_NAME	: string;
+  INPUT_TYPE	: string;
+  LOOKUP_TABLE	: string;
+  REQUIRED	: boolean;
+  CREATE	: boolean;
+  UPDATE	: boolean;
+  SEARCH	: boolean;
+  READONLY_ON_UPDATE : boolean;	
+  READONLY_ON_CREATE: boolean;
+  COLUMN_ORDER : number;
+  GROUP_ORDER	: number;
+  IS_LABEL: number;
+  TABLE_LABEL	: string;
+  GROUP_LABEL	: string;
+  COLUMN_LABEL: string;
+  LIST_ORDER:number;
+  child:CellBwModel[]
+  GROUP_NAME: string;
+}
+export class Groups{
+  groupName:string
+  ordering:number
+  child:CellBwModel[]
+}

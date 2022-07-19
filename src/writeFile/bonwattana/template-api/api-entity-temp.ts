@@ -1,9 +1,10 @@
-import { CellItemModel } from "../../../model/cellModel";
+import { InputDataType } from "../../../shared/constans";
+import { CellBwModel } from "../../../model/cellModel";
 import { BaseBoonwattanaClass } from "../base/base-boonwattana-class";
-export class NestEntityTemp extends BaseBoonwattanaClass {
-  private masterList: CellItemModel[];
+export class ApiEntityTemp extends BaseBoonwattanaClass {
+  private masterList: CellBwModel[];
   private t: string[];
-  constructor(masterList: CellItemModel[]) {
+  constructor(masterList: CellBwModel[]) {
     super(masterList);
     this.masterList = masterList;
     this.t = [];
@@ -13,117 +14,158 @@ export class NestEntityTemp extends BaseBoonwattanaClass {
     return this.t;
   }
   private initialDataItemPage() {
-    const columnEntity: CellItemModel[] = this.getColumnEntityList(
-      this.masterList
-    );
+    const dropdownField = this.masterList.filter(fl=> fl.INPUT_TYPE == InputDataType.FOREIGN)
+
     this.t.push(`import { BasicData } from "../shared/entities/basic-data";`);
     this.t.push(`import { Column, Connection, Entity, PrimaryGeneratedColumn, ViewColumn, ViewEntity } from "typeorm";`);
+    dropdownField.forEach(el=>{
+      const namePascal =this.getPascalCase(el.LOOKUP_TABLE)
+      const fileName = this.getFileCase(el.LOOKUP_TABLE)
+      this.t.push(`import { ${namePascal} } from "src/${fileName}/${fileName}.entity";`);
+
+    })
     this.t.push(``);
-    this.t.push(`@Entity('DEMO')`);
-    this.t.push(`export class Demo extends BasicData {`);
-    this.t.push(`  @PrimaryGeneratedColumn({type: 'bigint', name: 'ID'})`);
+    this.t.push(`@Entity('${this.snakeCase}')`);
+    this.t.push(`export class ${this.pascalCae} extends BasicData {`);
+    this.t.push(`  @PrimaryGeneratedColumn({type: 'bigint'})`);
     this.t.push(`  id?: number;`);
-    this.t.push(``);
-    this.t.push(`  @Column({name: 'DEMO_EMAIL', nullable: true})`);
-    this.t.push(`  demoEmail?: string;`);
-    this.t.push(``);
-    this.t.push(`  @Column({name: 'DEMO_NUMBER', nullable: true})`);
-    this.t.push(`  demoNumber?: number;`);
-    this.t.push(``);
-    this.t.push(`  @Column({name: 'DEMO_DATE', nullable: true})`);
-    this.t.push(`  demoDate?: Date;`);
-    this.t.push(``);
-    this.t.push(`  @Column({name: 'DEMO_ENUM', nullable: true})`);
-    this.t.push(`  demoEnum?: number;`);
-    this.t.push(``);
+    this.masterList.forEach(en=>{
+      const nullable = en.REQUIRED?'true':'false'
+      const fieldName = this.getCamelCase(en.COLUMN_NAME)
+      const fieldType = this.getTypeScriptDataType(en.INPUT_TYPE)
+      this.t.push(``);
+      this.t.push(`  @Column({nullable: ${nullable}})`);
+      this.t.push(`  ${fieldName}?: ${fieldType};`);
+    })
     this.t.push(`}`);
     this.t.push(`@ViewEntity({`);
-    this.t.push(`    name:'DEMO_LIST',`);
+    this.t.push(`    name:'${this.snakeCase}_list',`);
     this.t.push(`    expression: (connection: Connection) => connection.createQueryBuilder()`);
-    this.t.push(`        .select("demo.id", "ID")`);
-    this.t.push(`        .addSelect("demo.demoEmail", "DEMO_EMAIL")`);
-    this.t.push(`        .addSelect("demo.demoNumber", "DEMO_NUMBER")`);
-    this.t.push(`        .addSelect("demo.demoDate", "DEMO_DATE")`);
-    this.t.push(`        .addSelect("demo.demoEnum", "DEMO_ENUM")`);
-    this.t.push(`        .from(Demo, "demo")`);
+    this.t.push(`        .select("${this.snakeCase}.id", "id")`);
+
+    this.lists.forEach(en=>{
+      const fieldName = this.getCamelCase(en.COLUMN_NAME)
+      this.t.push(`        .addSelect("${this.snakeCase}.${fieldName}", "${fieldName}")`);
+      if(en.INPUT_TYPE == InputDataType.FOREIGN){
+        const tableJoin = en.LOOKUP_TABLE
+        const fieldName = this.getCamelCase(en.COLUMN_NAME)
+        const fieldRef = this.getSnakeCase(en.COLUMN_NAME)
+        const fieldJoinName = this.getFieldJoinName(fieldName)
+        const fieldLabel1 = this.getFieldLabel(en.child,1)
+        const fieldLabel2 = this.getFieldLabel(en.child,2)
+
+        this.t.push(`        .addSelect("CONCAT(${fieldRef}.${fieldLabel1} , '[' , ${fieldRef}.${fieldLabel2}, ']')", "${fieldJoinName}")`);
+      }
+    })
+    this.t.push(`        .from(${this.pascalCae}, "${this.snakeCase}")`);
+    this.lists.forEach(en=>{
+      if(en.INPUT_TYPE == InputDataType.FOREIGN){
+        const tableJoin = en.LOOKUP_TABLE
+        const tableJoinRef = this.getPascalCase(en.LOOKUP_TABLE) 
+        const fieldJoin = this.getCamelCase(en.COLUMN_NAME)
+        const fieldRef = this.getSnakeCase(en.COLUMN_NAME)
+
+        this.t.push(`        .leftJoin(${tableJoinRef}, "${fieldRef}","${fieldRef}.Id = ${this.snakeCase}.${fieldJoin}")`);
+      }
+    })
     this.t.push(`})`);
-    this.t.push(`export class VwDemoList {`);
-    this.t.push(``);
-    this.t.push(`    @ViewColumn({name:'ID'})`);
+    this.t.push(`export class Vw${this.pascalCae}List {`);
+    this.t.push(`    @ViewColumn()`);
     this.t.push(`    id: number;`);
-    this.t.push(``);
-    this.t.push(`    @ViewColumn({name:'DEMO_EMAIL'})`);
-    this.t.push(`    demoEmail: string;`);
-    this.t.push(``);
-    this.t.push(`    @ViewColumn({name:'DEMO_NUMBER'})`);
-    this.t.push(`    demoNumber: string;`);
-    this.t.push(``);
-    this.t.push(`    @ViewColumn({name:'DEMO_DATE'})`);
-    this.t.push(`    demoDate: string;`);
-    this.t.push(``);
-    this.t.push(`    @ViewColumn({name:'DEMO_ENUM'})`);
-    this.t.push(`    demoEnum: string;`);
-    this.t.push(``);
-    this.t.push(``);
+    this.lists.forEach(en=>{
+      const fieldName = this.getCamelCase(en.COLUMN_NAME)
+      const fieldType = this.getTypeScriptDataType(en.INPUT_TYPE)
+      this.t.push(``);
+      this.t.push(`    @ViewColumn()`);
+      this.t.push(`    ${fieldName}: ${fieldType};`);
+      if(en.INPUT_TYPE == InputDataType.FOREIGN){
+        const fieldName = this.getCamelCase(en.COLUMN_NAME)
+        const fieldJoinName = this.getFieldJoinName(fieldName)
+        this.t.push(``);
+        this.t.push(`    @ViewColumn()`);
+        this.t.push(`    ${fieldJoinName}: string;`);
+      }
+    })
     this.t.push(`}`);
     this.t.push(``);
     this.t.push(`@ViewEntity({`);
-    this.t.push(`  name:'DEMO_DROPDOWN',`);
+    this.t.push(`  name:'${this.snakeCase}_dropdown',`);
     this.t.push(`  expression: (connection: Connection) => connection.createQueryBuilder()`);
-    this.t.push(`  .select("demo.id", "ID")`);
-    this.t.push(`  .addSelect("demo.demoEmail", "DEMO_EMAIL")`);
-    this.t.push(`  .addSelect("demo.demoNumber", "DEMO_NUMBER")`);
-    this.t.push(`  .addSelect("demo.demoDate", "DEMO_DATE")`);
-    this.t.push(`  .addSelect("demo.demoEnum", "DEMO_ENUM")`);
-    this.t.push(`      .from(Demo, "demo")`);
+    this.t.push(`  .select("${this.snakeCase}.id", "value")`);
+    const fieldLabel1 = this.getFieldLabel(this.masterList,1)
+    const fieldLabel2 = this.getFieldLabel(this.masterList,2)
+    this.t.push(`  .addSelect("CONCAT(${this.snakeCase}.${fieldLabel1} , '[' , ${this.snakeCase}.${fieldLabel2}, ']')", "label")`);
+    this.t.push(`      .from(${this.pascalCae}, "${this.snakeCase}")`);
     this.t.push(`})`);
-    this.t.push(`export class VwDemoDropdown {`);
+    this.t.push(`export class Vw${this.pascalCae}Dropdown {`);
     this.t.push(``);
-    this.t.push(`  @ViewColumn({name:'ID'})`);
-    this.t.push(`    id: number;`);
+    this.t.push(`  @ViewColumn()`);
+    this.t.push(`    value: number;`);
     this.t.push(``);
-    this.t.push(`    @ViewColumn({name:'DEMO_EMAIL'})`);
-    this.t.push(`    demoEmail: string;`);
-    this.t.push(``);
-    this.t.push(`    @ViewColumn({name:'DEMO_NUMBER'})`);
-    this.t.push(`    demoNumber: string;`);
-    this.t.push(``);
-    this.t.push(`    @ViewColumn({name:'DEMO_DATE'})`);
-    this.t.push(`    demoDate: string;`);
-    this.t.push(``);
-    this.t.push(`    @ViewColumn({name:'DEMO_ENUM'})`);
-    this.t.push(`    demoEnum: string;`);
+    this.t.push(`    @ViewColumn()`);
+    this.t.push(`    label: string;`);
     this.t.push(`}`);
     this.t.push(`@ViewEntity({`);
-    this.t.push(`  name:'DEMO_ITEM',`);
+    this.t.push(`  name:'${this.snakeCase}_item',`);
     this.t.push(`  expression: (connection: Connection) => connection.createQueryBuilder()`);
-    this.t.push(`  .select("demo.id", "ID")`);
-    this.t.push(`  .addSelect("demo.demoEmail", "DEMO_EMAIL")`);
-    this.t.push(`  .addSelect("demo.demoNumber", "DEMO_NUMBER")`);
-    this.t.push(`  .addSelect("demo.demoDate", "DEMO_DATE")`);
-    this.t.push(`  .addSelect("demo.demoEnum", "DEMO_ENUM")`);
-    this.t.push(`      .from(Demo, "demo")`);
+    this.t.push(`  .select("${this.snakeCase}.id", "id")`);
+    this.items.forEach(en=>{
+      const fieldName = this.getCamelCase(en.COLUMN_NAME)
+      this.t.push(`        .addSelect("${this.snakeCase}.${fieldName}", "${fieldName}")`);
+      if(en.INPUT_TYPE == InputDataType.FOREIGN){
+        const tableJoin = en.LOOKUP_TABLE
+        const fieldName = this.getCamelCase(en.COLUMN_NAME)
+        const fieldRef = this.getSnakeCase(en.COLUMN_NAME)
+
+        const fieldJoinName = this.getFieldJoinName(fieldName)
+        const fieldLabel1 = this.getFieldLabel(en.child,1)
+        const fieldLabel2 = this.getFieldLabel(en.child,2)
+        this.t.push(`        .addSelect("CONCAT(${fieldRef}.${fieldLabel1} , '[' , ${fieldRef}.${fieldLabel2}, ']')", "${fieldJoinName}")`);
+      }
+    })
+    this.t.push(`      .from(${this.pascalCae}, "${this.snakeCase}")`);
+    this.items.forEach(en=>{
+      if(en.INPUT_TYPE == InputDataType.FOREIGN){
+        const tableJoin = en.LOOKUP_TABLE
+        const tableJoinRef = this.getPascalCase(en.LOOKUP_TABLE) 
+        const fieldJoin = this.getCamelCase(en.COLUMN_NAME)
+        const fieldRef = this.getSnakeCase(en.COLUMN_NAME)
+
+        this.t.push(`        .leftJoin(${tableJoinRef}, "${fieldRef}","${fieldRef}.Id = ${this.snakeCase}.${fieldJoin}")`);
+      }
+    })
     this.t.push(`})`);
-    this.t.push(`export class VwDemoItem {`);
+    this.t.push(`export class Vw${this.pascalCae}Item {`);
     this.t.push(``);
-    this.t.push(`  @ViewColumn({name:'ID'})`);
+    this.t.push(`  @ViewColumn()`);
     this.t.push(`    id: number;`);
-    this.t.push(``);
-    this.t.push(`    @ViewColumn({name:'DEMO_EMAIL'})`);
-    this.t.push(`    demoEmail: string;`);
-    this.t.push(``);
-    this.t.push(`    @ViewColumn({name:'DEMO_NUMBER'})`);
-    this.t.push(`    demoNumber: number;`);
-    this.t.push(``);
-    this.t.push(`    @ViewColumn({name:'DEMO_DATE'})`);
-    this.t.push(`    demoDate: Date;`);
-    this.t.push(``);
-    this.t.push(`    @ViewColumn({name:'DEMO_ENUM'})`);
-    this.t.push(`    demoEnum: string;`);
+    this.items.forEach(en=>{
+      const fieldName = this.getCamelCase(en.COLUMN_NAME)
+      const fieldType = this.getTypeScriptDataType(en.INPUT_TYPE)
+      this.t.push(``);
+      this.t.push(`    @ViewColumn()`);
+      this.t.push(`    ${fieldName}: ${fieldType};`);
+      if(en.INPUT_TYPE == InputDataType.FOREIGN){
+        const fieldName = this.getCamelCase(en.COLUMN_NAME)
+        const fieldJoinName = this.getFieldJoinName(fieldName)
+        this.t.push(``);
+        this.t.push(`    @ViewColumn()`);
+        this.t.push(`    ${fieldJoinName}: ${fieldType};`);
+      }
+    })
     this.t.push(`}`);
   }
-  getColumnEntityList(masterList: CellItemModel[]): CellItemModel[] {
-    const entityList = masterList.filter((fl) => fl.lookupControl != "PK"&& fl.create);
-    return entityList;
+  getFieldLabel(child: CellBwModel[], arg1: number) {
+    let columnName = ''
+    child.forEach(en=>{
+      if(en.IS_LABEL == arg1){
+        columnName = en.COLUMN_NAME
+      }
+    })
+    return this.getCamelCase(columnName)
   }
+  getFieldJoinName(fieldName: string) {
+    return fieldName.replace('Id','Value')
+  }
+
 }

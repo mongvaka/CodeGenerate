@@ -1,9 +1,9 @@
-import { CellItemModel } from "../../../model/cellModel";
+import { CellBwModel } from "../../../model/cellModel";
 import { BaseBoonwattanaClass } from "../base/base-boonwattana-class";
 export class AppModuleTemp extends BaseBoonwattanaClass {
-  private masterList: CellItemModel[];
+  private masterList: CellBwModel[];
   private t: string[];
-  constructor(masterList: CellItemModel[]) {
+  constructor(masterList: CellBwModel[]) {
     super(masterList);
     this.masterList = masterList;
     this.t = [];
@@ -15,22 +15,22 @@ export class AppModuleTemp extends BaseBoonwattanaClass {
   private initialDataItemPage() {
     this.t.push(`import { NgModule } from '@angular/core';`);
     this.t.push(`import { CommonModule } from '@angular/common';`);
-    this.t.push(`import { DemoListComponent } from './demo-list/demo-list.component';`);
-    this.t.push(`import { DemoItemComponent } from './demo-item/demo-item.component';`);
+    this.t.push(`import { ${this.pascalCae}ListComponent } from './${this.fileName}-list/${this.fileName}-list.component';`);
+    this.t.push(`import { ${this.pascalCae}ItemComponent } from './${this.fileName}-item/${this.fileName}-item.component';`);
     this.t.push(`import { SharedWidgetModule } from 'src/app/shared/widgets/shared-widget.module';`);
-    this.t.push(`import { DemoRouting } from './demo-routing';`);
+    this.t.push(`import { ${this.pascalCae}Routing } from './${this.fileName}-routing';`);
     this.t.push(`@NgModule({`);
     this.t.push(`  declarations: [`);
-    this.t.push(`    DemoListComponent,`);
-    this.t.push(`    DemoItemComponent`);
+    this.t.push(`    ${this.pascalCae}ListComponent,`);
+    this.t.push(`    ${this.pascalCae}ItemComponent`);
     this.t.push(`  ],`);
     this.t.push(`  imports: [`);
     this.t.push(`    CommonModule,`);
     this.t.push(`   SharedWidgetModule,`);
-    this.t.push(`   DemoRouting`);
+    this.t.push(`   ${this.pascalCae}Routing`);
     this.t.push(`  ],`);
-    this.t.push(`  exports: [DemoListComponent, DemoItemComponent,DemoRouting],`);
+    this.t.push(`  exports: [${this.pascalCae}ListComponent, ${this.pascalCae}ItemComponent,${this.pascalCae}Routing],`);
     this.t.push(`})`);
-    this.t.push(`export class DemoModule { }`);
+    this.t.push(`export class ${this.pascalCae}Module { }`);
   }
 }

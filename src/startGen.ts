@@ -1,6 +1,6 @@
 import { ItemComTemp } from "./writeFile/angularFile/template/itemComTemp";
 import { getFileFromExcel } from "./getData/getFileFromExel";
-import { CellItemModel } from "./model/cellModel";
+import { CellBwModel, CellItemModel } from "./model/cellModel";
 import { FormatType, StyleType } from "./shared/constans";
 import { CreateFileService } from "./shared/createFileService";
 import {
@@ -14,52 +14,67 @@ import { CreateAngular } from "./writeFile/angularFile/createAngular";
 import { CreateExpress } from "./writeFile/expressFile/createExpress";
 import { CreateFlutter } from "./writeFile/flutterFile/createFlutter";
 import { getFileFromExcelForNest } from "./getData/getFileFromExelForNest";
-import { CreateNest } from "./writeFile/bonwattana/create-boonwattana-stack";
+import { BoonWattana } from "./writeFile/bonwattana/create-boonwattana-stack";
+import { getDataFromExcelForBoonwattana, getDataInSheet, mapDataBoonwattana } from "./getData/get-data-from-excel";
 
 export const startGenerate = async () => {
-  // const masterList: CellItemModel[] = await getFileFromExcel([]);
-
-  const DOC1: CellItemModel[] =
-    await getFileFromExcelForNest("SYSTEM_FEATURE");
-  const DOC2: CellItemModel[] = await getFileFromExcelForNest(
-    "FEATURE_GROUP"
-  );
-  const DOC3: CellItemModel[] = await getFileFromExcelForNest(
-    "USER_PERMISSION"
-  );
-  // const DOC4: CellItemModel[] = await getFileFromExcelForNest(
-  //   "TTA_ANALYSIS"
-  // );
-  // const DOC5: CellItemModel[] = await getFileFromExcelForNest(
-  //   "CONTRACT"
-  // );
-  
-  // const DOC6: CellItemModel[] = await getFileFromExcelForNest("CONTRACT_HAS_FUNDING");
-  // const DOC7: CellItemModel[] =
-  //   await getFileFromExcelForNest("CONTRACT_TYPE");
-  //   const DOC8: CellItemModel[] =
-  //   await getFileFromExcelForNest("STORE");
-  // const creatAngularService = new CreateAngular(masterList);
-  // creatAngularService.createAngularWeb();
-  // const createExpress = new CreateExpress(masterList);
-  // createExpress.createExpressApi();
-  // const createFlutter = new CreateFlutter(masterList);
-  // createFlutter.createFlutterApp();
-  const createNest1 = new CreateNest(DOC1);
-   const createNest2 = new CreateNest(DOC2);
-  const createNest3 = new CreateNest(DOC3);
-  // const createNest4 = new CreateNest(DOC4);
-  // const createNest5 = new CreateNest(DOC5);
-  // const createNest6 = new CreateNest(DOC6);
-  // const createNest7 = new CreateNest(DOC7);
-  // const createNest8 = new CreateNest(DOC8);
-
-  createNest1.createNestApi();
-  createNest2.createNestApi();
-  createNest3.createNestApi();
-  // createNest4.createNestApi();
-  // createNest5.createNestApi();
-  // createNest6.createNestApi();
-  // createNest7.createNestApi();
-  // createNest8.createNestApi();
+  let dataMapped:CellBwModel[] = []
+  const sheetList =[
+  'hopital',
+  'address',
+  'student',
+  'parent',
+  'bmi-history',
+  'congenitial-disease',
+  'old-school',
+  'teacher',
+  'teach-schedule',
+  'degree',
+  'university',
+  'estimate-detail',
+  'home-visit',
+  'student-sibling',
+  'estimate-temp',
+  'estimate-group',
+  'scholarship',
+  'country',
+  'province',
+  'district',
+  'sub-district',
+  'request-edit']
+  const cellModels: CellBwModel[] = []
+  for (const it of sheetList) {
+    const DOC1 = await getDataFromExcelForBoonwattana(it);
+    cellModels.push(...DOC1)
+  }
+  dataMapped = await mapDataBoonwattana(cellModels)
+  startCreate(dataMapped,'student')
+  startCreate(dataMapped,'address')
+  startCreate(dataMapped,'hopital')
+  startCreate(dataMapped,'parent')
+  startCreate(dataMapped,'bmi_history')
+  startCreate(dataMapped,'congenitial_disease')
+  startCreate(dataMapped,'old_school')
+  startCreate(dataMapped,'teacher')
+  startCreate(dataMapped,'teach_schedule')
+  startCreate(dataMapped,'degree')
+  startCreate(dataMapped,'university')
+  startCreate(dataMapped,'estimate_detail')
+  startCreate(dataMapped,'home_visit')
+  startCreate(dataMapped,'student_sibling')
+  startCreate(dataMapped,'estimate_temp')
+  startCreate(dataMapped,'estimate_group')
+  startCreate(dataMapped,'scholarship')
+  startCreate(dataMapped,'country')
+  startCreate(dataMapped,'province')
+  startCreate(dataMapped,'district')
+  startCreate(dataMapped,'sub_district')
+  startCreate(dataMapped,'request_edit')
 };
+export const startCreate = (data:CellBwModel[],tableName:string) =>{
+  console.log('createModule', tableName);
+  
+  const student = getDataInSheet(data,tableName)
+  const boonwattana:BoonWattana = new BoonWattana(student)
+  boonwattana.createBoonWattanaStack()
+}
