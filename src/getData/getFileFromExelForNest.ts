@@ -6,7 +6,7 @@ export const getFileFromExcelForNest = async (
 ): Promise<CellItemModel[]> => {
   try {
     let newDataList: CellItemModel[] = [];
-    const excelFile = await readXlsxFile("import/brt.xlsx", {
+    const excelFile = await readXlsxFile("import/brt-data-dic.xlsx", {
       sheet: sheetName,
     });
     let firstTime = true;

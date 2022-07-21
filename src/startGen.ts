@@ -20,12 +20,12 @@ export const startGenerate = async () => {
   // const masterList: CellItemModel[] = await getFileFromExcel([]);
 
   const DOC1: CellItemModel[] =
-    await getFileFromExcelForNest("SYSTEM_FEATURE");
+    await getFileFromExcelForNest("16 PC_REJECT_AND_CANCEL_REASON_");
   const DOC2: CellItemModel[] = await getFileFromExcelForNest(
-    "FEATURE_GROUP"
+    "72 PC_FORMAT"
   );
   const DOC3: CellItemModel[] = await getFileFromExcelForNest(
-    "USER_PERMISSION"
+    "74 PC_DEPARTMENT"
   );
   // const DOC4: CellItemModel[] = await getFileFromExcelForNest(
   //   "TTA_ANALYSIS"

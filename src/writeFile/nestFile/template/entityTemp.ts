@@ -54,7 +54,7 @@ export class NestEntityTemp extends BaseNestClass {
     this.t.push(`}`);
   }
   getColumnEntityList(masterList: CellItemModel[]): CellItemModel[] {
-    const entityList = masterList.filter((fl) => fl.lookupControl != "PK"&& fl.create);
+    const entityList = masterList.filter((fl) => fl.lookupControl != "PK");
     return entityList;
   }
 }
