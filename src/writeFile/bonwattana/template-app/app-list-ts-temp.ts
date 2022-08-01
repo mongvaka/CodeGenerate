@@ -38,8 +38,14 @@ export class AppListTsTemp extends BaseBoonwattanaClass {
     //enumDropdown section
     const dropdownOptions = this.masterList.filter(fl=>(fl.INPUT_TYPE == InputDataType.ENUM||fl.INPUT_TYPE == InputDataType.FOREIGN)&& (fl.SEARCH||fl.LIST_ORDER))
     dropdownOptions.forEach(el=>{
-      const nameCamel = this.getCamelCase(el.COLUMN_NAME)
-      this.t.push(`  ${nameCamel}Option:SelectItems[] = []`);
+      if(el.INPUT_TYPE == InputDataType.FOREIGN){
+        const nameCamel = this.getCamelCase(el.COLUMN_NAME).replace('Id','')
+        this.t.push(`  ${nameCamel}Option:SelectItems[] = []`);
+      }else{
+        const nameCamel = this.getCamelCase(el.COLUMN_NAME)
+        this.t.push(`  ${nameCamel}Option:SelectItems[] = []`);
+      }
+      
     })
     //enumDropdown section
     this.t.push(`  constructor(private service: ${this.pascalCae}Service,`);
@@ -62,7 +68,7 @@ export class AppListTsTemp extends BaseBoonwattanaClass {
       this.t.push(`          feildName:'${feildNameCamel}',`);
       this.t.push(`          label:'LABEL.${nameUpper}',`);
       this.t.push(`          inputType:InputType.${inputType},`);
-      this.t.push(`          operator:Operators.${operatorName}`);
+      this.t.push(`          operator:Operators.${operatorName},`);
       this.t.push(`${optionName}`);
       this.t.push(`      },`);
     })
@@ -98,21 +104,24 @@ export class AppListTsTemp extends BaseBoonwattanaClass {
     if(foreignOptions.length){
       this.t.push(`    forkJoin(`);
       foreignOptions.forEach(el=>{
-        const optionNamePascal = this.getPascalCase(el.COLUMN_NAME)
+        const optionNamePascal = this.getPascalCase(el.COLUMN_NAME).replace('Id','')
         this.t.push(`    this.service.get${optionNamePascal}Dropdown(),`);
       })
       this.t.push(`    ).subscribe(`);
-      this.t.push(`      (`);
+      this.t.push(`      ([`);
       foreignOptions.forEach(el=>{
-        const optionNameCamel = this.getCamelCase(el.COLUMN_NAME)
+        const optionNameCamel = this.getCamelCase(el.COLUMN_NAME).replace('Id','')
         this.t.push(`      ${optionNameCamel}Option,`);
       })
-      this.t.push(`      ) => {`);
+      this.t.push(`      ]) => {`);
       this.t.push(`      [`);
       foreignOptions.forEach(el=>{
-        const optionNameCamel = this.getCamelCase(el.COLUMN_NAME)
+        const optionNameCamel = this.getCamelCase(el.COLUMN_NAME).replace('Id','')
         this.t.push(`     this.${optionNameCamel}Option =${optionNameCamel}Option  as SelectItems[],`);
+        
       })
+      this.t.push(`     this.setSerachCondtion()`);
+
       this.t.push(`      ]`);
       this.t.push(`      }),`);
       this.t.push(`      (error) => {`);
@@ -132,9 +141,10 @@ export class AppListTsTemp extends BaseBoonwattanaClass {
     // setDataGridOption
     this.lists.forEach(el=>{
       const labelName = this.getUpperCase(el.COLUMN_NAME)
-      const columnName  = this.getCamelCase(el.COLUMN_NAME)
+      const columnName  = this.getDataTypeForGridOption(this.getCamelCase(el.COLUMN_NAME),el.INPUT_TYPE) 
       const columnType  = this.getColumnType(el.INPUT_TYPE)
       const optionName = this.getOptionName(el.INPUT_TYPE,el.COLUMN_NAME)
+      
       this.t.push(`      {`);
       this.t.push(`        label: 'LABEL.${labelName}',`);
       this.t.push(`        textKey: '${columnName}',`);
@@ -165,9 +175,16 @@ export class AppListTsTemp extends BaseBoonwattanaClass {
     this.t.push(`    })`);
     this.t.push(`  }`);
     this.t.push(`  toItemPage(id:number,isView:boolean){`);
-    this.t.push(`    this.toItem('demo',id,isView)`);
+    this.t.push(`    this.toItem('${this.fileName}',id,isView)`);
     this.t.push(`  }`);
     this.t.push(`}`);
+  }
+  getDataTypeForGridOption(arg0: string, INPUT_TYPE: string) {
+    if(INPUT_TYPE == InputDataType.FOREIGN){
+      return arg0.replace('Id','Value')
+    }else{
+      return arg0
+    }
   }
   getOperator(INPUT_TYPE: string) {
     if(INPUT_TYPE == InputDataType.FOREIGN || INPUT_TYPE == InputDataType.ENUM){
@@ -176,8 +193,8 @@ export class AppListTsTemp extends BaseBoonwattanaClass {
       return  `LIKE` 
     }  }
   getOptionName(INPUT_TYPE: string, COLUMN_NAME: string) {
-    if(INPUT_TYPE == InputDataType.FOREIGN || INPUT_TYPE == InputDataType.ENUM){
-      const nameCamel = this.getCamelCase(COLUMN_NAME)
+    if(INPUT_TYPE == InputDataType.ENUM){
+      const nameCamel = this.getCamelCase(COLUMN_NAME).replace('Id','')
       return `        enumOption: this.${nameCamel}Option`
     }else{
       return  ''

@@ -36,8 +36,14 @@ export class AppItemTsTemp extends BaseBoonwattanaClass {
     //dropdownSection
     const dropdownOptions = this.masterList.filter(fl=>fl.INPUT_TYPE == InputDataType.ENUM || fl.INPUT_TYPE == InputDataType.FOREIGN)
     dropdownOptions.forEach(el=>{
-      const optionNameCamel = this.getCamelCase(el.COLUMN_NAME)
+      if(el.INPUT_TYPE == InputDataType.FOREIGN){
+        const optionNameCamel = this.getCamelCase(el.COLUMN_NAME).replace('Id','')
+        this.t.push(`  ${optionNameCamel}Dropdown:SelectItems[]=[]`);
+      }else{
+        const optionNameCamel = this.getCamelCase(el.COLUMN_NAME)
       this.t.push(`  ${optionNameCamel}Dropdown:SelectItems[]=[]`);
+      }
+      
     })
     //dropdownSection
     this.t.push(`  formValidate:boolean =true`);
@@ -49,6 +55,8 @@ export class AppItemTsTemp extends BaseBoonwattanaClass {
     this.t.push(`    }else{`);
     this.t.push(`      this.setInitialCreatingData()`);
     this.t.push(`    }`);
+    this.t.push(`      this.onAsyncRunner();`);
+
     this.t.push(`  }`);
     this.t.push(``);
     this.t.push(`  onEnumLoader(): void {`);
@@ -79,7 +87,7 @@ export class AppItemTsTemp extends BaseBoonwattanaClass {
 
     this.t.push(`    forkJoin(`);
     foreignOptions.forEach(el=>{
-      const optionNamePascal = this.getPascalCase(el.COLUMN_NAME)
+      const optionNamePascal = this.getPascalCase(el.COLUMN_NAME).replace('Id','')
       this.t.push(`    this.service.get${optionNamePascal}Dropdown(),`);
     })
     this.t.push(`    ).subscribe(`);
@@ -87,7 +95,7 @@ export class AppItemTsTemp extends BaseBoonwattanaClass {
     this.t.push(`      [`);
 
     foreignOptions.forEach(el=>{
-      const optionNameCamel = this.getCamelCase(el.COLUMN_NAME)
+      const optionNameCamel = this.getCamelCase(el.COLUMN_NAME).replace('Id','')
       this.t.push(`      ${optionNameCamel}Dropdown,`);
     })
     this.t.push(`      ]`);
@@ -95,7 +103,7 @@ export class AppItemTsTemp extends BaseBoonwattanaClass {
     this.t.push(`      ) => {`);
     this.t.push(`      [`);
     foreignOptions.forEach(el=>{
-      const optionNameCamel = this.getCamelCase(el.COLUMN_NAME)
+      const optionNameCamel = this.getCamelCase(el.COLUMN_NAME).replace('Id','')
       this.t.push(`     this.${optionNameCamel}Dropdown =${optionNameCamel}Dropdown  as SelectItems[],`);
     })
     this.t.push(`      ]`);
@@ -109,7 +117,6 @@ export class AppItemTsTemp extends BaseBoonwattanaClass {
     this.t.push(`  async setInitialCreatingData(){`);
     this.t.push(`    this.service.initial().subscribe(result=>{`);
     this.t.push(`      this.model = result`);
-    this.t.push(`      this.onAsyncRunner(result);`);
     this.t.push(`    })`);
     this.t.push(`  }`);
     this.t.push(`  onSave(): void {`);

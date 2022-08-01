@@ -24,7 +24,7 @@ export class AppItemHtmlTemp extends BaseBoonwattanaClass {
 
     this.groups.forEach(el=>{
       const groupName = this.getUpperCase(el.groupName)
-      this.t.push(`    <button class="group">{{"MODULE.${groupName}"|translate}}</button>`);
+      this.t.push(`    <button class="group">{{"GROUP.${groupName}"|translate}}</button>`);
       this.t.push(`    <div class="grid p-fluid form ">`);
 
       el.child.forEach(en=>{
@@ -70,11 +70,11 @@ export class AppItemHtmlTemp extends BaseBoonwattanaClass {
     }
   }
   getModelOption(inputType: string,conlumnName:string) {
-    const optionName = this.getCamelCase(conlumnName)
+    const optionName = this.getCamelCase(conlumnName).replace('Id','')
     if(inputType == InputDataType.ENUM){
-      return `[setSelectOption]=${optionName}Dropdown>`
+      return `[setSelectOption]=${optionName}Dropdown`
     }else if(inputType == InputDataType.FOREIGN){
-      return `[setSelectOption]=${optionName}Dropdown>`
+      return `[setSelectOption]=${optionName}Dropdown`
     }else{
       return ''
     }

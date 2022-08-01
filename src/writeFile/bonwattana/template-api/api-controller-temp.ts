@@ -18,14 +18,15 @@ export class ApiControllerTemp extends BaseBoonwattanaClass {
 
     this.t.push(`import { Body, Controller, Delete, Get, Param, Post, Put, Req, UseGuards } from "@nestjs/common";`);
     this.t.push(`import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";`);
-    this.t.push(`import { JwtAuthGuard } from "src/authentications/jwt-auth.guard";`);
-    this.t.push(`import { BaseController } from "src/shared/controller/base-controller";`);
-    this.t.push(`import { CustomRequest } from "src/shared/models/request-model";`);
-    this.t.push(`import { DropdownService } from "src/shared/services/dropdown.service";`);
-    dropdownField.forEach(el=>{
-      const namePascal =this.getPascalCase(el.LOOKUP_TABLE)
-      const fileName = this.getFileCase(el.LOOKUP_TABLE)
-      this.t.push(`import { Search${namePascal}Dto } from "src/${fileName}/${fileName}.dto";`);
+    this.t.push(`import { JwtAuthGuard } from "src/core/authentications/jwt-auth.guard";`);
+    this.t.push(`import { BaseController } from "src/core/shared/controller/base-controller";`);
+    this.t.push(`import { CustomRequest } from "src/core/shared/models/request-model";`);
+    this.t.push(`import { DropdownService } from "src/core/shared/services/dropdown.service";`);
+    const tableImport:string[] = [...new Set([...dropdownField.map(mp=>mp.LOOKUP_TABLE)])]
+    tableImport.forEach(en=>{
+      const namePascal =this.getPascalCase(en)
+      const fileName = this.getFileCase(en)
+      this.t.push(`import { Search${namePascal}Dto } from "src/api/${fileName}/${fileName}.dto";`);
 
     })
     this.t.push(`import { Create${this.pascalCae}Dto, Search${this.pascalCae}Dto, Update${this.pascalCae}Dto } from "./${this.fileName}.dto";`);
@@ -58,11 +59,13 @@ export class ApiControllerTemp extends BaseBoonwattanaClass {
 
     // dropdownSection
     this.foreigns.forEach(el=>{
-      const moduleName= this.getFileCase(el.LOOKUP_TABLE)
+      const moduleName= this.getFileCase(el.COLUMN_NAME).replace('-id','')
       const moduleNamePascal= this.getPascalCase(el.LOOKUP_TABLE)
       const moduleNameCamel= this.getCamelCase(el.LOOKUP_TABLE)
+      const methodeName= this.getCamelCase(el.COLUMN_NAME).replace('Id','')
+
       this.t.push(`  @Get('${moduleName}-dropdown')`);
-      this.t.push(`  async ${moduleName}Dropdown(@Body() dto: Search${moduleNamePascal}Dto) {`);
+      this.t.push(`  async ${methodeName}Dropdown(@Body() dto: Search${moduleNamePascal}Dto) {`);
       this.t.push(`    try{      `);
       this.t.push(`      return this.success(await this.${this.camelCase}Service.${moduleNameCamel}Dropdown(dto))`);
       this.t.push(`    }catch(e){`);

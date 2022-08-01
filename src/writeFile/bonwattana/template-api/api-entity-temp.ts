@@ -16,12 +16,14 @@ export class ApiEntityTemp extends BaseBoonwattanaClass {
   private initialDataItemPage() {
     const dropdownField = this.masterList.filter(fl=> fl.INPUT_TYPE == InputDataType.FOREIGN)
 
-    this.t.push(`import { BasicData } from "../shared/entities/basic-data";`);
+    this.t.push(`import { BasicData } from "src/core/shared/entities/basic-data";`);
     this.t.push(`import { Column, Connection, Entity, PrimaryGeneratedColumn, ViewColumn, ViewEntity } from "typeorm";`);
-    dropdownField.forEach(el=>{
-      const namePascal =this.getPascalCase(el.LOOKUP_TABLE)
-      const fileName = this.getFileCase(el.LOOKUP_TABLE)
-      this.t.push(`import { ${namePascal} } from "src/${fileName}/${fileName}.entity";`);
+
+    const tableImport:string[] = [...new Set([...dropdownField.map(mp=>mp.LOOKUP_TABLE)])]
+    tableImport.forEach(en=>{
+      const namePascal =this.getPascalCase(en)
+      const fileName = this.getFileCase(en)
+      this.t.push(`import { ${namePascal} } from "src/api/${fileName}/${fileName}.entity";`);
 
     })
     this.t.push(``);
@@ -150,7 +152,7 @@ export class ApiEntityTemp extends BaseBoonwattanaClass {
         const fieldJoinName = this.getFieldJoinName(fieldName)
         this.t.push(``);
         this.t.push(`    @ViewColumn()`);
-        this.t.push(`    ${fieldJoinName}: ${fieldType};`);
+        this.t.push(`    ${fieldJoinName}: string;`);
       }
     })
     this.t.push(`}`);

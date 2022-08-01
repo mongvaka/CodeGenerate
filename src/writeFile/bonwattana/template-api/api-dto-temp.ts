@@ -24,13 +24,13 @@ export class ApiDtoTemp extends BaseBoonwattanaClass {
     );
 
     this.t.push(`import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";`);
-    this.t.push(`import { SearchParameter } from "src/shared/models/search-param-model";`);
+    this.t.push(`import { SearchParameter } from "src/core/shared/models/search-param-model";`);
     this.t.push(``);
     this.t.push(`export class Search${this.pascalCae}Dto extends SearchParameter {`);
     searchFiled.forEach(en=>{
       const fieldName = this.getCamelCase(en.COLUMN_NAME)
       const fieldType = this.getTypeScriptDataType(en.INPUT_TYPE)
-      this.t.push(`    ${fieldName}:${fieldType}`);
+      this.t.push(`    ${fieldName}?:${fieldType}`);
     })
     this.t.push(`}`);
     this.t.push(`export class ${this.pascalCae}Dto {`);

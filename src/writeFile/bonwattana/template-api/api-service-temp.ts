@@ -17,17 +17,20 @@ export class ApiServiceTemp extends BaseBoonwattanaClass {
     const dropdownList = this.masterList.filter(fl=>fl.INPUT_TYPE == InputDataType.FOREIGN)
     this.t.push(`import { Injectable } from '@nestjs/common';`);
     this.t.push(`import { InjectRepository } from '@nestjs/typeorm';`);
-    this.t.push(`import { CustomRequest } from 'src/shared/models/request-model';`);
-    this.t.push(`import { SearchResult, SelectItems } from 'src/shared/models/search-param-model';`);
-    this.t.push(`import { BaseService } from 'src/shared/services/base.service';`);
-    this.t.push(`import { DropdownService } from 'src/shared/services/dropdown.service';`);
+    this.t.push(`import { CustomRequest } from 'src/core/shared/models/request-model';`);
+    this.t.push(`import { SearchResult, SelectItems } from 'src/core/shared/models/search-param-model';`);
+    this.t.push(`import { BaseService } from 'src/core/shared/services/base.service';`);
+    this.t.push(`import { DropdownService } from 'src/core/shared/services/dropdown.service';`);
     this.t.push(`import { Repository } from 'typeorm';`);
     this.t.push(`import { Create${this.pascalCae}Dto, ${this.pascalCae}Dto, Search${this.pascalCae}Dto, Update${this.pascalCae}Dto } from './${this.fileName}.dto';`);
     this.t.push(`import { ${this.pascalCae}, Vw${this.pascalCae}Dropdown, Vw${this.pascalCae}Item, Vw${this.pascalCae}List } from './${this.fileName}.entity';`);
-    dropdownList.forEach(el=>{
-      const namePascal =this.getPascalCase(el.LOOKUP_TABLE)
-      const fileName = this.getFileCase(el.LOOKUP_TABLE)
-      this.t.push(`import { Vw${namePascal}Dropdown } from 'src/${fileName}/${fileName}.entity';`);
+
+    const tableImport:string[] = [...new Set([...dropdownList.map(mp=>mp.LOOKUP_TABLE)])]
+    tableImport.forEach(en=>{
+      const namePascal =this.getPascalCase(en)
+      const fileName = this.getFileCase(en)
+      this.t.push(`import { Vw${namePascal}Dropdown } from 'src/api/${fileName}/${fileName}.entity';`);
+      this.t.push(`import { Search${namePascal}Dto } from 'src/api/${fileName}/${fileName}.dto';`);
 
     })
     this.t.push(``);
@@ -41,8 +44,8 @@ export class ApiServiceTemp extends BaseBoonwattanaClass {
     this.t.push(`        private readonly vw${this.pascalCae}Repository: Repository<Vw${this.pascalCae}List>,`);
     this.t.push(`        @InjectRepository(Vw${this.pascalCae}Item)`);
     this.t.push(`        private readonly itemRepository:Repository<Vw${this.pascalCae}Item>,`);
-    dropdownList.forEach(en=>{
-      const tablePascal = this.getPascalCase(en.LOOKUP_TABLE)
+    tableImport.forEach(en=>{
+      const tablePascal = this.getPascalCase(en)
       this.t.push(`        @InjectRepository(Vw${tablePascal}Dropdown)`);
       this.t.push(`        private readonly vwDropdown${tablePascal}Repository:Repository<Vw${tablePascal}Dropdown>,`);
     })
@@ -52,9 +55,9 @@ export class ApiServiceTemp extends BaseBoonwattanaClass {
     this.t.push(`    }`);
 
     //dropdown section
-    dropdownList.forEach(en=>{
-      const tableCamel = this.getCamelCase(en.LOOKUP_TABLE)
-      const tablePascal = this.getPascalCase(en.LOOKUP_TABLE)
+    tableImport.forEach(en=>{
+      const tableCamel = this.getCamelCase(en)
+      const tablePascal = this.getPascalCase(en)
       this.t.push(`    async ${tableCamel}Dropdown(dto: Search${tablePascal}Dto):Promise<SelectItems[]> {`);
       this.t.push(`        return await this.dropdownService.${tableCamel}Dropdown(dto,this.vwDropdown${tablePascal}Repository);`);
       this.t.push(`      }`);
@@ -73,7 +76,7 @@ export class ApiServiceTemp extends BaseBoonwattanaClass {
     this.t.push(`        );`);
     this.t.push(`    }`);
     this.t.push(`    async update(id:number,dto:Update${this.pascalCae}Dto,req:CustomRequest):Promise<${this.pascalCae}Dto>{`);
-    this.t.push(`        const m = await this.${this.camelCase}Repository.find({where:{id:dto.id}})`);
+    this.t.push(`        const m = await this.${this.camelCase}Repository.findOne({where:{id:id}})`);
     this.t.push(`        return await this.${this.camelCase}Repository.save(`);
     this.t.push(`            this.toUpdateModel(m,dto,req)`);
     this.t.push(`        );`);

@@ -308,4 +308,5 @@ export const getInputType =(dataType:string)=>{
     default:
       return InputType.STRING;
   }
+
 }

@@ -18,11 +18,12 @@ export class ApiModuleTemp extends BaseBoonwattanaClass {
 
     this.t.push(`import { Module } from '@nestjs/common';`);
     this.t.push(`import { TypeOrmModule } from '@nestjs/typeorm';`);
-    this.t.push(`import { DropdownService } from 'src/shared/services/dropdown.service';`);
-    dropdownField.forEach(el=>{
-      const namePascal =this.getPascalCase(el.LOOKUP_TABLE)
-      const fileName = this.getFileCase(el.LOOKUP_TABLE)
-      this.t.push(`import { Vw${namePascal}Dropdown } from 'src/${fileName}/${fileName}.entity';`);
+    this.t.push(`import { DropdownService } from 'src/core/shared/services/dropdown.service';`);
+    const tableImport:string[] = [...new Set([...dropdownField.map(mp=>mp.LOOKUP_TABLE)])]
+    tableImport.forEach(en=>{
+      const namePascal =this.getPascalCase(en)
+      const fileName = this.getFileCase(en)
+      this.t.push(`import { Vw${namePascal}Dropdown } from 'src/api/${fileName}/${fileName}.entity';`);
 
     })
     this.t.push(`import { ${this.pascalCae}Controller } from './${this.fileName}.controller';`);
@@ -31,14 +32,16 @@ export class ApiModuleTemp extends BaseBoonwattanaClass {
     this.t.push(``);
     this.t.push(`@Module({`);
     this.t.push(`  imports: [`);
-    this.t.push(`    TypeOrmModule.forFeature([${this.pascalCae},Vw${this.pascalCae}List,Vw${this.pascalCae}Item,Vw${this.pascalCae}Dropdown])`);
+    this.t.push(`    TypeOrmModule.forFeature([${this.pascalCae},Vw${this.pascalCae}List,Vw${this.pascalCae}Item,Vw${this.pascalCae}Dropdown,`);
     dropdownField.forEach(el=>{
       const namePascal =this.getPascalCase(el.LOOKUP_TABLE)
+
+    })
+    tableImport.forEach(en=>{
+      const namePascal =this.getPascalCase(en)
       this.t.push(`    Vw${namePascal}Dropdown,`);
 
     })
-    this.t.push(`    ,`);
-
     this.t.push(`    ])`);
     this.t.push(`  ],`);
     this.t.push(`  controllers: [${this.pascalCae}Controller],`);

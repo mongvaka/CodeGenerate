@@ -16,7 +16,8 @@ import { AppListTsTemp } from "./template-app/app-list-ts-temp";
 import { AppModuleTemp } from "./template-app/app-module-temp";
 import { AppModelTemp } from "./template-app/app-model-temp";
 import { AppRoutingTemp } from "./template-app/app-routing-temp";
-import { AppServiceTemp } from "./template-app/app-service-temp ";
+import { AppServiceTemp } from "./template-app/app-service-temp";
+import { AppTranslateTemp } from "./template-app/app-translate";
 export class BoonWattana extends BaseBoonwattanaClass {
   private masterList: CellBwModel[];
 
@@ -65,7 +66,7 @@ export class BoonWattana extends BaseBoonwattanaClass {
     this.createFile(`api/${this.fileName}`,this.apiDtoTemp.getTemplate(), ".dto",FormatType.TS);
     this.createFile(`api/${this.fileName}`,this.apiEntityTemp.getTemplate(), ".entity",FormatType.TS);
     this.createFile(`api/${this.fileName}`,this.apiModuleTemp.getTemplate(), ".module",FormatType.TS);
-    this.createFile(`api/${this.fileName}`,this.apiDropdrownTemp.getTemplate(), ".dropdown",FormatType.TS);
+    // this.createFile(`api/${this.fileName}`,this.apiDropdrownTemp.getTemplate(), ".dropdown",FormatType.TS);
 
     this.createFile(`web/${this.fileName}`,this.appModelTempt.getTemplate(), "-model",FormatType.TS);
     this.createFile(`web/${this.fileName}`,this.appRoutingTempt.getTemplate(), "-routing",FormatType.TS);
@@ -80,7 +81,7 @@ export class BoonWattana extends BaseBoonwattanaClass {
     
 
   }
-  private createFile(path:string,template: string[], fileDescription: string,type:FormatType) {
+  public createFile(path:string,template: string[], fileDescription: string,type:FormatType) {
     const directory: string = `export/${path}`;
     const fileName: string = `${this.fileName}${fileDescription}`;
     this.createFileService.saveFile(
@@ -88,6 +89,15 @@ export class BoonWattana extends BaseBoonwattanaClass {
       type,
       fileName,
       directory
+    );
+  }
+  createTranlateFile(cellModels:CellBwModel[] ){
+    const translateTemp:AppTranslateTemp = new AppTranslateTemp(cellModels)
+    this.createFileService.saveFile(
+      translateTemp.getTemplate(),
+      FormatType.TS,
+      'th',
+      'export/translate'
     );
   }
 }

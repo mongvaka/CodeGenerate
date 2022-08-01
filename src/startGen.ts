@@ -16,6 +16,7 @@ import { CreateFlutter } from "./writeFile/flutterFile/createFlutter";
 import { getFileFromExcelForNest } from "./getData/getFileFromExelForNest";
 import { BoonWattana } from "./writeFile/bonwattana/create-boonwattana-stack";
 import { getDataFromExcelForBoonwattana, getDataInSheet, mapDataBoonwattana } from "./getData/get-data-from-excel";
+import { AppTranslateTemp } from "./writeFile/bonwattana/template-app/app-translate";
 
 export const startGenerate = async () => {
   let dataMapped:CellBwModel[] = []
@@ -70,6 +71,9 @@ export const startGenerate = async () => {
   startCreate(dataMapped,'district')
   startCreate(dataMapped,'sub_district')
   startCreate(dataMapped,'request_edit')
+  const translate:BoonWattana = new BoonWattana(cellModels)
+  translate.createTranlateFile(cellModels)
+
 };
 export const startCreate = (data:CellBwModel[],tableName:string) =>{
   console.log('createModule', tableName);

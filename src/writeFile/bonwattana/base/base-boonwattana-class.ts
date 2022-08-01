@@ -262,4 +262,5 @@ export class BaseBoonwattanaClass {
         return "String";
     }
   }
+
 }

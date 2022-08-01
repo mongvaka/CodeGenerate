@@ -40,8 +40,8 @@ export class AppServiceTemp extends BaseBoonwattanaClass {
     //dropdownSection
     const foreignOptions = this.masterList.filter(fl=>fl.INPUT_TYPE == InputDataType.FOREIGN)
     foreignOptions.forEach(el=>{
-      const namePascal = this.getPascalCase(el.COLUMN_NAME)
-      const pathName = this.getFileCase(el.COLUMN_NAME)
+      const namePascal = this.getPascalCase(el.COLUMN_NAME).replace('Id','')
+      const pathName = this.getFileCase(el.COLUMN_NAME).replace('-id','')
       this.t.push(`  get${namePascal}Dropdown(): any {`);
       this.t.push("    const url = `${this.servicePath}/"+pathName+"-dropdown`;");
       this.t.push(`    return  this.gateway.get(url);`);

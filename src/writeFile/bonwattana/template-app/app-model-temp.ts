@@ -1,3 +1,4 @@
+import { InputDataType } from "../../../shared/constans";
 import { CellBwModel } from "../../../model/cellModel";
 import { BaseBoonwattanaClass } from "../base/base-boonwattana-class";
 export class AppModelTemp extends BaseBoonwattanaClass {
@@ -19,6 +20,10 @@ export class AppModelTemp extends BaseBoonwattanaClass {
       const columnName =  this.getCamelCase(el.COLUMN_NAME)
       const fieldType = this.getTypeScriptDataType(el.INPUT_TYPE)
       this.t.push(`    ${columnName}: ${fieldType};`);
+      if(el.INPUT_TYPE == InputDataType.FOREIGN){
+        this.t.push(`    ${columnName.replace('Id','Value')}: string;`);
+
+      }
     })
     this.t.push(`}`);
     this.t.push(`export class ${this.pascalCae}ItemModel{`);
@@ -27,6 +32,10 @@ export class AppModelTemp extends BaseBoonwattanaClass {
       const columnName =  this.getCamelCase(el.COLUMN_NAME)
       const fieldType = this.getTypeScriptDataType(el.INPUT_TYPE)
       this.t.push(`    ${columnName}: ${fieldType};`);
+      if(el.INPUT_TYPE == InputDataType.FOREIGN){
+        this.t.push(`    ${columnName.replace('Id','Value')}: string;`);
+
+      }
     })
     this.t.push(`}`);
   }
