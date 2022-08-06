@@ -252,7 +252,7 @@ export class ListComTemp extends BaseClass {
       const dropdownMethodNonTable: string = getNameRemoveTable(dropdownMethod);
       if (item.dataType == DataType.UUID) {
         this.typeScript.push(
-          `    this.baseDropdown.get${dropdownMethodNonTable}DropDown(this.${optionNameNonTable}Option);`
+          `    this.baseDropdown.get${dropdownMethodNonTable}Dropdown(this.${optionNameNonTable}Option);`
         );
       }
     });
@@ -271,7 +271,7 @@ export class ListComTemp extends BaseClass {
       const dropdownMethodNonTable: string = getNameRemoveTable(dropdownMethod);
       if (item.dataType == DataType.INT) {
         this.typeScript.push(
-          `    this.baseDropdown.get${dropdownMethodNonTable}DropDown(this.${optionNameNonTable}Option);`
+          `    this.baseDropdown.get${dropdownMethodNonTable}Dropdown(this.${optionNameNonTable}Option);`
         );
       }
     });

@@ -20,7 +20,6 @@ export class SchemaTemp extends BaseClass {
     this.masterList = masterList;
   }
   getSchemaData(): string[] {
-    console.log("getSchemaData : ");
 
     this.initialCustomComData();
     return this.template;

@@ -25,7 +25,6 @@ export class ItemComTemp extends BaseClass {
     this.masterGroupList = this.masterList
       .map((item) => item.groupName)
       .filter((value, index, self) => self.indexOf(value) === index);
-    console.log(this.masterGroupList);
   }
   getCustomComData(): string[] {
     this.initialCustomComData();
@@ -251,7 +250,6 @@ export class ItemComTemp extends BaseClass {
       (val) => val.readonlyOnCreate
     );
     const readonlyOnViewList = this.masterList.filter((val) => val.readonly);
-    console.log(this.masterGroupList);
     this.custom.push(
       `import { ${this.moduleName}ItemModel } from 'app/models';`
     );
@@ -458,7 +456,7 @@ export class ItemComTemp extends BaseClass {
       const lookupTableName: string = getNameRemoveTable(item.lookupTableName);
       const dropdownName: string = getPascalCase(lookupTableName);
       this.typeScript.push(
-        `    this.baseDropdown.get${dropdownName}DropDown(this.${optionName}Options);`
+        `    this.baseDropdown.get${dropdownName}Dropdown(this.${optionName}Options);`
       );
     });
 
@@ -509,7 +507,7 @@ export class ItemComTemp extends BaseClass {
       const optionNameNonTable = getNameRemoveTable(optionName);
 
       this.typeScript.push(
-        `      this.baseDropdown.get${optionNameNonTable}DropDown(),`
+        `      this.baseDropdown.get${optionNameNonTable}Dropdown(),`
       );
     });
 
