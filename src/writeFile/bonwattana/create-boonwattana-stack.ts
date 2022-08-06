@@ -66,7 +66,7 @@ export class BoonWattana extends BaseBoonwattanaClass {
     this.createFile(`api/${this.fileName}`,this.apiDtoTemp.getTemplate(), ".dto",FormatType.TS);
     this.createFile(`api/${this.fileName}`,this.apiEntityTemp.getTemplate(), ".entity",FormatType.TS);
     this.createFile(`api/${this.fileName}`,this.apiModuleTemp.getTemplate(), ".module",FormatType.TS);
-    // this.createFile(`api/${this.fileName}`,this.apiDropdrownTemp.getTemplate(), ".dropdown",FormatType.TS);
+    this.createFile(`api/${this.fileName}`,this.apiDropdrownTemp.getTemplate(), ".dropdown",FormatType.TS);
 
     this.createFile(`web/${this.fileName}`,this.appModelTempt.getTemplate(), "-model",FormatType.TS);
     this.createFile(`web/${this.fileName}`,this.appRoutingTempt.getTemplate(), "-routing",FormatType.TS);

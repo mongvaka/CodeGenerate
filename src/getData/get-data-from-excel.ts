@@ -6,7 +6,7 @@ export const getDataFromExcelForBoonwattana = async (
 ): Promise<CellBwModel[]> => {
   try {
     let newDataList: CellBwModel[] = [];
-    const excelFile = await readXlsxFile("import/data-template.xlsx", {
+    const excelFile = await readXlsxFile("import/con-project.xlsx", {
       sheet: sheetName,
     });
     let firstTime = true;

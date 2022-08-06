@@ -21,56 +21,36 @@ import { AppTranslateTemp } from "./writeFile/bonwattana/template-app/app-transl
 export const startGenerate = async () => {
   let dataMapped:CellBwModel[] = []
   const sheetList =[
-  'hopital',
-  'address',
-  'student',
-  'parent',
-  'bmi-history',
-  'congenitial-disease',
-  'old-school',
-  'teacher',
-  'teach-schedule',
-  'degree',
-  'university',
-  'estimate-detail',
-  'home-visit',
-  'student-sibling',
-  'estimate-temp',
-  'estimate-group',
-  'scholarship',
-  'country',
-  'province',
-  'district',
-  'sub-district',
-  'request-edit']
+  'shop',
+  'category',
+  'product',
+  'product_option',
+  'product_detail',
+  'product_promotion',
+  'product_image',
+  'order_header',
+  'order_detail',
+  'user_infomation',
+  'delivery',
+  'delivery_tracking']
   const cellModels: CellBwModel[] = []
   for (const it of sheetList) {
     const DOC1 = await getDataFromExcelForBoonwattana(it);
     cellModels.push(...DOC1)
   }
   dataMapped = await mapDataBoonwattana(cellModels)
-  startCreate(dataMapped,'student')
-  startCreate(dataMapped,'address')
-  startCreate(dataMapped,'hopital')
-  startCreate(dataMapped,'parent')
-  startCreate(dataMapped,'bmi_history')
-  startCreate(dataMapped,'congenitial_disease')
-  startCreate(dataMapped,'old_school')
-  startCreate(dataMapped,'teacher')
-  startCreate(dataMapped,'teach_schedule')
-  startCreate(dataMapped,'degree')
-  startCreate(dataMapped,'university')
-  startCreate(dataMapped,'estimate_detail')
-  startCreate(dataMapped,'home_visit')
-  startCreate(dataMapped,'student_sibling')
-  startCreate(dataMapped,'estimate_temp')
-  startCreate(dataMapped,'estimate_group')
-  startCreate(dataMapped,'scholarship')
-  startCreate(dataMapped,'country')
-  startCreate(dataMapped,'province')
-  startCreate(dataMapped,'district')
-  startCreate(dataMapped,'sub_district')
-  startCreate(dataMapped,'request_edit')
+  startCreate(dataMapped,'shop')
+  startCreate(dataMapped,'category')
+  startCreate(dataMapped,'product')
+  startCreate(dataMapped,'product_option')
+  startCreate(dataMapped,'product_detail')
+  startCreate(dataMapped,'product_promotion')
+  startCreate(dataMapped,'product_image')
+  startCreate(dataMapped,'order_header')
+  startCreate(dataMapped,'order_detail')
+  startCreate(dataMapped,'user_infomation')
+  startCreate(dataMapped,'delivery')
+  startCreate(dataMapped,'delivery_tracking')
   const translate:BoonWattana = new BoonWattana(cellModels)
   translate.createTranlateFile(cellModels)
 
