@@ -59,7 +59,7 @@ export class ListPageTemp extends BaseClass {
     this.template.push(
       `import 'package:ice_fac_mobile/ViewModel/search_result.dart';`
     );
-    this.template.push(`import 'package:provider/src/provider.dart';`);
+    this.template.push(`import 'package:provider/src/core/provider.dart';`);
     this.template.push(
       `import 'package:pull_to_refresh/pull_to_refresh.dart';`
     );
