@@ -21,43 +21,37 @@ import { AppTranslateTemp } from "./writeFile/bonwattana/template-app/app-transl
 export const startGenerate = async () => {
   let dataMapped:CellBwModel[] = []
   const sheetList =[
-  'shop',
-  'category',
-  'product',
-  'product_option',
-  'product_detail',
-  'product_promotion',
-  'product_image',
-  'order_header',
-  'order_detail',
-  'user_infomation',
-  'delivery',
-  'delivery_tracking']
+    'student',
+    'classroom',
+    'gendar',
+    'alive_with',
+  'classroom_type',
+  'parent_status',
+  'religion',
+  'ethnicity',
+  'nationality',
+
+  ]
   const cellModels: CellBwModel[] = []
   for (const it of sheetList) {
     const DOC1 = await getDataFromExcelForBoonwattana(it);
     cellModels.push(...DOC1)
   }
   dataMapped = await mapDataBoonwattana(cellModels)
-  startCreate(dataMapped,'shop')
-  startCreate(dataMapped,'category')
-  startCreate(dataMapped,'product')
-  startCreate(dataMapped,'product_option')
-  startCreate(dataMapped,'product_detail')
-  startCreate(dataMapped,'product_promotion')
-  startCreate(dataMapped,'product_image')
-  startCreate(dataMapped,'order_header')
-  startCreate(dataMapped,'order_detail')
-  startCreate(dataMapped,'user_infomation')
-  startCreate(dataMapped,'delivery')
-  startCreate(dataMapped,'delivery_tracking')
+  startCreate(dataMapped,'student')
+  startCreate(dataMapped,'classroom')
+  startCreate(dataMapped,'gendar')
+  startCreate(dataMapped,'alive_with')
+  startCreate(dataMapped,'classroom_type')
+  startCreate(dataMapped,'parent_status')
+  startCreate(dataMapped,'religion')
+  startCreate(dataMapped,'ethnicity')
+  startCreate(dataMapped,'nationality')
   const translate:BoonWattana = new BoonWattana(cellModels)
   translate.createTranlateFile(cellModels)
 
 };
-export const startCreate = (data:CellBwModel[],tableName:string) =>{
-  console.log('createModule', tableName);
-  
+export const startCreate = (data:CellBwModel[],tableName:string) =>{  
   const student = getDataInSheet(data,tableName)
   const boonwattana:BoonWattana = new BoonWattana(student)
   boonwattana.createBoonWattanaStack()

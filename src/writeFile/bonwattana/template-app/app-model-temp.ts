@@ -17,6 +17,8 @@ export class AppModelTemp extends BaseBoonwattanaClass {
     this.t.push(`export class ${this.pascalCae}ListModel{`);
     this.t.push(`    id:number`);
     this.lists.forEach(el=>{
+      console.log('el.COLUMN_NAME',el.COLUMN_NAME);
+      
       const columnName =  this.getCamelCase(el.COLUMN_NAME)
       const fieldType = this.getTypeScriptDataType(el.INPUT_TYPE)
       this.t.push(`    ${columnName}: ${fieldType};`);
@@ -29,6 +31,8 @@ export class AppModelTemp extends BaseBoonwattanaClass {
     this.t.push(`export class ${this.pascalCae}ItemModel{`);
     this.t.push(`    id:number`);
     this.items.forEach(el=>{
+      console.log('el.COLUMN_NAME iem',el.COLUMN_NAME);
+
       const columnName =  this.getCamelCase(el.COLUMN_NAME)
       const fieldType = this.getTypeScriptDataType(el.INPUT_TYPE)
       this.t.push(`    ${columnName}: ${fieldType};`);
