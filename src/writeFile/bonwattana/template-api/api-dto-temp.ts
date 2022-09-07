@@ -30,6 +30,8 @@ export class ApiDtoTemp extends BaseBoonwattanaClass {
     searchFiled.forEach(en=>{
       const fieldName = this.getCamelCase(en.COLUMN_NAME)
       const fieldType = this.getTypeScriptDataType(en.INPUT_TYPE)
+      const fieldTypeUpper = this.getTypeScriptDataDtoType(en.INPUT_TYPE)
+      this.t.push(`@ApiPropertyOptional({ type: ${fieldTypeUpper}})`);
       this.t.push(`    ${fieldName}?:${fieldType}`);
     })
     this.t.push(`}`);
@@ -37,6 +39,8 @@ export class ApiDtoTemp extends BaseBoonwattanaClass {
     this.masterList.forEach(en=>{
       const fieldName = this.getCamelCase(en.COLUMN_NAME)
       const fieldType = this.getTypeScriptDataType(en.INPUT_TYPE)
+      const fieldTypeUpper = this.getTypeScriptDataDtoType(en.INPUT_TYPE)
+      this.t.push(`@ApiPropertyOptional({ type: ${fieldTypeUpper}})`);
       this.t.push(`    ${fieldName}:${fieldType}`);
     })
     this.t.push(`} `);
@@ -44,6 +48,8 @@ export class ApiDtoTemp extends BaseBoonwattanaClass {
     createFiled.forEach(en=>{
       const fieldName = this.getCamelCase(en.COLUMN_NAME)
       const fieldType = this.getTypeScriptDataType(en.INPUT_TYPE)
+      const fieldTypeUpper = this.getTypeScriptDataDtoType(en.INPUT_TYPE)
+      this.t.push(`@ApiPropertyOptional({ type: ${fieldTypeUpper}})`);
       this.t.push(`    ${fieldName}:${fieldType}`);
     })
     this.t.push(`}`);
@@ -51,6 +57,8 @@ export class ApiDtoTemp extends BaseBoonwattanaClass {
     updateFiled.forEach(en=>{
       const fieldName = this.getCamelCase(en.COLUMN_NAME)
       const fieldType = this.getTypeScriptDataType(en.INPUT_TYPE)
+      const fieldTypeUpper = this.getTypeScriptDataDtoType(en.INPUT_TYPE)
+      this.t.push(`@ApiPropertyOptional({ type: ${fieldTypeUpper}})`);
       this.t.push(`    ${fieldName}:${fieldType}`);
     })
     this.t.push(`}`);

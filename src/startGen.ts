@@ -21,16 +21,7 @@ import { AppTranslateTemp } from "./writeFile/bonwattana/template-app/app-transl
 export const startGenerate = async () => {
   let dataMapped:CellBwModel[] = []
   const sheetList =[
-    'student',
-    'classroom',
-    'gendar',
-    'alive_with',
-  'classroom_type',
-  'parent_status',
-  'religion',
-  'ethnicity',
-  'nationality',
-
+    'research'
   ]
   const cellModels: CellBwModel[] = []
   for (const it of sheetList) {
@@ -38,15 +29,8 @@ export const startGenerate = async () => {
     cellModels.push(...DOC1)
   }
   dataMapped = await mapDataBoonwattana(cellModels)
-  startCreate(dataMapped,'student')
-  startCreate(dataMapped,'classroom')
-  startCreate(dataMapped,'gendar')
-  startCreate(dataMapped,'alive_with')
-  startCreate(dataMapped,'classroom_type')
-  startCreate(dataMapped,'parent_status')
-  startCreate(dataMapped,'religion')
-  startCreate(dataMapped,'ethnicity')
-  startCreate(dataMapped,'nationality')
+  startCreate(dataMapped,'research')
+
   const translate:BoonWattana = new BoonWattana(cellModels)
   translate.createTranlateFile(cellModels)
 

@@ -56,7 +56,7 @@ export class ApiEntityTemp extends BaseBoonwattanaClass {
         const fieldLabel1 = this.getFieldLabel(en.child,1)
         const fieldLabel2 = this.getFieldLabel(en.child,2)
 
-        this.t.push(`        .addSelect("CONCAT(${fieldRef}.${fieldLabel1} , '[' , ${fieldRef}.${fieldLabel2}, ']')", "${fieldJoinName}")`);
+        this.t.push(`        .addSelect("CONCAT(${fieldRef}.${fieldLabel1} , ' ' , ${fieldRef}.${fieldLabel2})", "${fieldJoinName}")`);
       }
     })
     this.t.push(`        .from(${this.pascalCae}, "${this.snakeCase}")`);
@@ -96,7 +96,7 @@ export class ApiEntityTemp extends BaseBoonwattanaClass {
     this.t.push(`  .select("${this.snakeCase}.id", "value")`);
     const fieldLabel1 = this.getFieldLabel(this.masterList,1)
     const fieldLabel2 = this.getFieldLabel(this.masterList,2)
-    this.t.push(`  .addSelect("CONCAT(${this.snakeCase}.${fieldLabel1} , '[' , ${this.snakeCase}.${fieldLabel2}, ']')", "label")`);
+    this.t.push(`  .addSelect("CONCAT(${this.snakeCase}.${fieldLabel1} , ' ' , ${this.snakeCase}.${fieldLabel2})", "label")`);
     this.t.push(`      .from(${this.pascalCae}, "${this.snakeCase}")`);
     this.t.push(`})`);
     this.t.push(`export class Vw${this.pascalCae}Dropdown {`);
@@ -122,7 +122,7 @@ export class ApiEntityTemp extends BaseBoonwattanaClass {
         const fieldJoinName = this.getFieldJoinName(fieldName)
         const fieldLabel1 = this.getFieldLabel(en.child,1)
         const fieldLabel2 = this.getFieldLabel(en.child,2)
-        this.t.push(`        .addSelect("CONCAT(${fieldRef}.${fieldLabel1} , '[' , ${fieldRef}.${fieldLabel2}, ']')", "${fieldJoinName}")`);
+        this.t.push(`        .addSelect("CONCAT(${fieldRef}.${fieldLabel1} , ' ' , ${fieldRef}.${fieldLabel2})", "${fieldJoinName}")`);
       }
     })
     this.t.push(`      .from(${this.pascalCae}, "${this.snakeCase}")`);

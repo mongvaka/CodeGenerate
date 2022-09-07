@@ -179,6 +179,37 @@ export class BaseBoonwattanaClass {
         return "varchar";
     }
   }
+  getTypeScriptDataDtoType(datadaseType: string): string {
+    switch (datadaseType) {
+      case InputDataType.ENUM:
+        return "Number";
+      case InputDataType.FOREIGN:
+        return "Number";
+      case InputDataType.DECIMAL2:
+        return "Number";
+      case InputDataType.DECIMAL4:
+        return "Number";
+      case InputDataType.DECIMAL0:
+        return "Number";
+      case InputDataType.DATE:
+        return "Date";
+      case InputDataType.TIME:
+        return "String";
+      case InputDataType.BOOLEAN:
+        return "Boolean";
+      case InputDataType.SHOT_TEXT:
+        return "String";
+      case InputDataType.LONG_TEXT:
+        return "String";
+      case InputDataType.EMAIL:
+        return "String";
+      case InputDataType.PHONE:
+        return "String";
+      default:
+        console.log("error : Data type out of range :", datadaseType);
+        return "String";
+    }
+  }
   getTypeScriptDataType(datadaseType: string): string {
     switch (datadaseType) {
       case InputDataType.ENUM:
